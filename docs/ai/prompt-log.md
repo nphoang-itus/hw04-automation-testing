@@ -155,3 +155,43 @@ Bạn xem `plan-FR02.md` mục 4 (21 test case) và mục 8 (rủi ro). Nếu đ
 ````
 
 ---
+
+### #5 — 2026-11-14 01:49 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+Đọc FR-02 và Login.jsx, liệt kê locator khả dụng, trạng thái ẩn, rủi ro flaky
+````
+- **Output (verbatim, text only):**
+````text
+Đã xong bước P1, kết quả lưu ở `docs/fr02-p1-analysis.md` (đã commit và push, `72edd0c`). Tôi mới đọc code, chưa mở trang `/login` thật để kiểm tra locator.
+
+**Locator khả dụng**
+- Không dùng được `getByLabel`, vì `<label>` không có `for`, không bọc ô nhập. Hai ô nhập không có `id`, `name` hay `data-testid`.
+- Ô email: `form input` thứ 0. Ô mật khẩu: `form input` thứ 1. Cả hai đều `type="text"`.
+- Nút gửi: `getByRole('button', { name: 'Sign In' })`.
+- Thông báo lỗi: `div.bg-red-100`. Không có `role="alert"`, và chỉ có một chuỗi chung "Đăng nhập thất bại…", nên UI không phân biệt được lỗi sai thông tin với lỗi bị khóa.
+- Đã đăng nhập: nút "Thoát" và dòng `Chào, <tên>`. Token nằm ở `localStorage['token']`.
+- Trang dùng `<h2>` "Đăng Ký" và không có `<h1>`.
+
+**Trạng thái ẩn**
+- `login_attempts` và `locked_until` nằm trong DB, xem được qua `GET /api/admin/users` bằng JWT admin.
+- Bị khóa trả 403, sai thông tin trả 401. Chỉ thấy qua API, UI gộp chung.
+- Bộ đếm không reset khi hết khóa, chỉ reset khi đăng nhập đúng.
+- `login` và `/api/users/me` trả cả mật khẩu thô.
+
+**Rủi ro flaky:** có 11 rủi ro (F1–F11) kèm đối sách, các rủi ro chính:
+- Bộ đếm khóa là state dùng chung, nên mỗi test cần tài khoản riêng (tạo qua `POST /api/register`, xóa bằng `DELETE /api/admin/users/:id`).
+- Chạy song song 3 browser nên email phải khác nhau theo browser.
+- Chờ hết khóa phải dùng `toPass` hoặc `expect.poll`, không dùng sleep cố định.
+- Hộp thoại báo lỗi `required` khác nhau giữa các browser, nên kiểm `validity.valueMissing` thay vì đọc text.
+- Server tính thời gian riêng, `page.clock` không điều khiển được.
+
+Tôi cũng liệt kê trong file các lỗi AI dễ mắc ở bước sau (dùng `getByLabel`, `role="alert"`, `input[type=email]`, kỳ vọng khóa 30 s thật) để đối chiếu khi review.
+
+Dòng audit #5 đã thêm (verdict PENDING), thống kê cập nhật thành 5 artifact. Mục #5 trong `prompt-log.md` sẽ xuất hiện ở lần chạy `ailog.py` kế tiếp, vì câu trả lời cuối của lượt này viết sau khi script chạy.
+
+Bước tiếp theo là P2: danh sách test case dạng bảng theo mẫu ROLE/CONTEXT/TASK/FORMAT, kèm đối chiếu kỳ vọng với spec. Bạn muốn tôi làm luôn không?
+````
+
+---
