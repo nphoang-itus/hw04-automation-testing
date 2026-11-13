@@ -222,3 +222,61 @@ Tôi đã thêm dòng audit #6 (verdict PENDING, thống kê 6 artifact). Mục 
 ````
 
 ---
+
+### #7 — 2026-11-14 01:56 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+1. ok tôi đồng ý
+2. bỏ đi, chỉ làm những thứ liên quan tới FR đã chọn
+3. ok, cứ theo spec mà làm
+````
+- **Output (verbatim, text only):**
+````text
+Đã ghi lại quyết định của bạn và làm xong bước P3 (dữ liệu CSV/JSON cho FR-02). Đã commit và push (`7fe396f`).
+
+**Quyết định áp dụng**
+1. B04: UI khi bị khóa hiển thị lỗi giống khi sai mật khẩu, không nêu "khóa".
+2. Bỏ A13, A14 và B07, còn **18 test case** (A01–A12, B01–B06). Tôi hiểu "bỏ đi" của bạn là bỏ cả ba case đó, vì câu hỏi của tôi liệt kê cả ba. Nếu bạn muốn giữ A13/A14 thì báo tôi, thêm lại rất nhanh.
+3. Email hoa/thường, khoảng trắng và bộ đếm sau hết khóa: không tạo test case, ghi là spec gap.
+
+Quyết định đã ghi vào `docs/fr02-p2-testcases.md` (mục 7) và `docs/plan-FR02.md`.
+
+**File dữ liệu**
+- `data/fr02-login-lockout.csv`: 12 dòng A01–A12. Các cột chính: `wrong_attempts`, `email_kind`, `password_kind`, `wait_after_lock_s`, `expected_outcome` (`logged_in`, `rejected` hoặc `blocked_client`), `expected_text`, `spec_ref`, `hw02_ref`.
+- `data/fr02-checks.json`: 6 kiểm tra B01–B06. Các loại check: `attribute`, `attempts_after_wrong`, `message_equal`, `api_body_lacks`, `token_bearer`.
+- File chỉ ghi loại dữ liệu (`valid`/`wrong`/`unregistered`…), không ghi email hay mật khẩu cụ thể. Phần tạo tài khoản sẽ do POM và helper ở P4 lo.
+- Kỳ vọng lấy từ spec, không lấy từ hành vi hiện tại của SUT. `hw02_ref` chỉ điền ở những dòng tôi biết chắc ID bên HW02.
+
+Tôi mới kiểm file bằng Python (12 dòng, 6 check, đúng số cột), chưa nạp bằng helper Playwright. Dòng audit #7 đã thêm (PENDING), thống kê giờ là 7 artifact.
+
+Tiếp theo là P4: `pages/LoginPage.ts` và `utils/api.ts`, gồm tạo/xóa tài khoản test và đọc `login_attempts` qua admin API. Bạn muốn tôi làm luôn không?
+````
+
+---
+
+### #8 — 2026-11-14 02:03 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+Thực hiện implement pages/LoginPage.ts và utils/api.ts, gồm tạo/xóa tài khoản test và đọc login_attempts qua admin API
+````
+- **Output (verbatim, text only):**
+````text
+No response requested.
+````
+
+---
+
+### #9 — 2026-11-14 02:04 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+keep going
+````
+- **Output (verbatim, text only):**
+````text
+Chromium đã cài xong. Giờ chạy smoke test tạm để kiểm helper và locator trên SUT thật.
+````
+
+---
