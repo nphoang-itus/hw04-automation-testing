@@ -1,22 +1,36 @@
 import { test, expect } from '@playwright/test';
+import { CheckoutPage } from '../pages/CheckoutPage';
 import { loadData } from '../utils/data';
+// import { createTestAccount, deleteTestAccount } from '../utils/api';
 
-// TODO: replace with the real feature (Pool B, FR-08) and >= 12 rows in data/fr08-checkout.csv
-const cases = loadData('fr08-checkout.csv');
+interface Case {
+  id: string;
+  type: string;
+  title: string;
+  expected_outcome: string;
+  spec_ref: string;
+  // TODO: one column per varying input / expected value in data/fr08-checkout.csv
+}
 
-test.describe('Feature B - FR-08 Checkout', () => {
+const cases = loadData<Case>('fr08-checkout.csv');
+
+test.describe('FR-08 Checkout', () => {
   for (const tc of cases) {
-    test(`${tc.id} [${tc.type}]`, async ({ page }) => {
-      await page.goto('/'); // TODO: feature URL
+    test(`${tc.id} [${tc.type}] ${tc.title}`, async ({ page, request }, testInfo) => {
+      // Arrange: isolated data for this test and browser, e.g.
+      // const acct = await createTestAccount(request, `${testInfo.project.name}_${tc.id}`.toLowerCase());
+      try {
+        const ui = new CheckoutPage(page);
+        await ui.goto();
 
-      // TODO: perform steps using tc.input1 / tc.input2
+        // Act: one behaviour under test, using values from `tc`
 
-      // Use >= 3 distinct assertion patterns across the suite, e.g.:
-      // await expect(page).toHaveURL(/.../);                    // URL
-      // await expect(page.getByRole('alert')).toContainText(tc.expected); // text
-      // await expect(page.locator('...')).toBeVisible();        // visibility
-      // await expect(page.locator('...')).toHaveCount(n);       // count
-      expect(tc.expected).toBeDefined();
+        // Assert: expected result from the SPEC; use several kinds (URL, text, visibility,
+        // attribute, state via API, status code). Never wait with fixed sleeps.
+        expect(tc.expected_outcome).toBeTruthy(); // TODO replace
+      } finally {
+        // await deleteTestAccount(request, acct.id);
+      }
     });
   }
 });

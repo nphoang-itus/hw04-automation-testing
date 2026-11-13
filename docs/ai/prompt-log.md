@@ -543,3 +543,37 @@ Bạn mở thử vài issue để kiểm tra ảnh hiển thị đúng nhé. FR-
 ````
 
 ---
+
+### #17 — 2026-11-14 02:53 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+Trước khi tới FR-08, hãy thực hiện tạo 1 Agent Skill áp dụng quy trình automation này (sinh và bảo trì script data-driven, đa trình duyệt), để dùng lại cho feature khác.
+````
+- **Output (verbatim, text only):**
+````text
+Commit trước chỉ chứa lệnh xóa `skill/SKILL.md`, vì lệnh `git add` bị lỗi pathspec và tôi đã giấu lỗi. Tôi thêm đúng các file rồi amend commit chưa push này.
+
+Agent Skill `data-driven-playwright` đã xong, commit local `38f5445` (chưa push). Skill nằm ở `.claude/skills/data-driven-playwright/` và thay cho `skill/SKILL.md` cũ chỉ có khung.
+
+**Nội dung skill**
+- `SKILL.md`: quy trình 11 bước (0–10) lấy từ FR-02. Lần lượt: scaffold, phân tích (P1), test case (P2), dữ liệu (P3), helper (P4), spec nháp rồi commit nguyên bản (P5), chạy thật và phân loại lỗi (P7), cải tiến (P6), chạy 3 browser, bug report, kiểm tra cuối. Kèm luật cứng: dữ liệu ngoài file, ≥ 12 test case, ≥ 3 kiểu assertion, mỗi test tự tạo và dọn dữ liệu, không sleep cố định, kỳ vọng theo spec.
+- `reference.md`: kỹ thuật từ slide kèm bảng bài học FR-02 (label không gắn input, assertion rỗng, chờ khóa, báo cáo cần mở ra kiểm).
+- `templates/`: spec, page object, CSV, JSON, mẫu P1/P2/P6 và script chụp bằng chứng bug.
+- `scripts/new_feature.py`: tạo khung cho feature mới, không ghi đè file có sẵn.
+- `scripts/validate_feature.py`: kiểm số test case, dữ liệu inline, sleep cố định, TODO sót lại, số kiểu assertion, đủ 3 browser và tiêu đề "Run by".
+
+**Đã kiểm bằng chạy thật**
+- `validate_feature.py fr02` báo OK (20 test case, 8 kiểu assertion).
+- Chạy trên khung FR-08 báo FAIL đúng như mong đợi (còn TODO, thiếu test case).
+- `new_feature.py` tạo được một feature thử trong thư mục tạm và từ chối ghi đè khi chạy lần hai.
+- Khi thử, validator báo nhầm `test.setTimeout(` là sleep cố định, tôi đã sửa regex.
+
+Skill chưa từng chạy trọn vẹn trên một feature mới nên FR-08 sẽ là lần thử thật. Video demo skill để bạn tự quay (đề yêu cầu quay trọn một feature bằng skill, FR-08 là dịp tốt).
+
+**Lỗi của tôi:** lệnh `git add` có một pathspec sai và tôi đã giấu lỗi, nên commit đầu chỉ chứa lệnh xóa file cũ. Tôi phát hiện ngay, thêm file đúng và amend commit chưa push. Con trỏ trong `CLAUDE.md`, README và `docs/report.md` đã cập nhật, dòng audit #15 đã thêm (INCOMPLETE).
+
+Bạn có muốn tôi bắt đầu FR-08 theo skill này không (chạy `new_feature.py` rồi P1)?
+````
+
+---
