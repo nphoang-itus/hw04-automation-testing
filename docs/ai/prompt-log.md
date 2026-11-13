@@ -85,6 +85,37 @@ Bổ sung ai-audit cho tôi nãy giờ, đảm bảo bây giờ mỗi lần tôi
 - **Output (verbatim, text only):**
 ````text
 Đang đọc script trích log AI của HW02 để tái dùng cho HW04, rồi sẽ tạo `prompt-log`, `ai-audit-report` và quy tắc tự ghi mỗi lượt.
+
+Đã bổ sung AI audit cho các lượt từ đầu phiên đến giờ. Tôi cũng đặt quy tắc để các lượt sau tự ghi. Đã commit và push (`7d163fa`).
+
+**Các file mới**
+- `docs/ai-audit-report.md`: theo mẫu AI-02 của HW02. Gồm thông tin sinh viên, bảng audit 5 cột, thống kê độ chính xác, mục kết luận, tuyên bố disclosure, chữ ký và checklist Privacy. Bảng hiện có 3 dòng:
+  - Lượt 1 (setup folder): INCOMPLETE.
+  - Lượt 2 (`.env`, repo, SUT): INCOMPLETE.
+  - Lượt 3 (lượt này): PENDING.
+- `docs/ai/prompt-log.md`: prompt và output nguyên văn kèm giờ thật, do `scripts/ailog.py` trích tự động từ transcript của Claude Code. Lệnh `/chrome` không có output AI nên đã bị loại.
+- `docs/ai/chore-turns.md`: nơi ghi các lượt việc vặt không audit.
+- `CLAUDE.md`: quy tắc bắt buộc. Sau mỗi prompt tôi sẽ chạy `ailog.py`, thêm 1 dòng vào bảng audit, cập nhật thống kê và commit.
+
+**Một số điểm cần lưu ý**
+- **Việc vặt:** hãy bắt đầu prompt bằng `[chore]`. Script sẽ bỏ qua lượt đó và tôi không thêm dòng audit. Nếu bạn chỉ nói bằng lời, tôi chỉ ghi vào `chore-turns.md`.
+- **Verdict:** tôi chỉ ghi những gì đã kiểm chứng thật. Phần bạn tự review hoặc sửa đang để "Pending". Các mục kết luận, disclosure, chữ ký và AI Critique để bạn tự viết.
+- **Lượt hiện tại:** prompt-log chỉ có đầy đủ output của lượt này sau lần chạy script tiếp theo, vì câu trả lời cuối được viết sau khi script chạy. Dòng audit lượt này đã ghi nhận hạn chế đó.
+
+Muốn bắt đầu viết test case và dữ liệu cho FR-02 thì bạn gửi prompt tiếp, tôi sẽ làm từng bước và tự ghi audit.
+````
+
+---
+
+### #4 — 2026-11-13 21:45 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+bây giờ hãy bắt đầu với task đầu tiên là Task 1: Script automation do AI sinh. hãy bắt đầu với feature FR02. Trước tiên hãy lên plan cho task này, với kỹ thuật được trích xuất từ bài giảng trong đường dẫn: '/Users/nphoang/Library/CloudStorage/GoogleDrive-nphuchoang.itus@gmail.com/.shortcut-targets-by-id/16h7U2cdbwjxFCW7AxqlC-9wVjBHXrpBm/CSC13003-CQ-Software Testing-CT4-VN/Slides' (lọc các kiến thức có liên quan và tổng hợp vào 1 file duy nhất)
+````
+- **Output (verbatim, text only):**
+````text
+Đang đọc code đăng nhập của SUT (locator, logic khóa) để lập plan FR-02 sát thực tế.
 ````
 
 ---
