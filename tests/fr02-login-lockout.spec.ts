@@ -55,6 +55,7 @@ test.describe('FR-02 Login & account lockout', () => {
           await login.attempt(acct.email, WRONG_PASSWORD);
         }
 
+        const lockedAt = Date.now(); // the last wrong attempt is the one that locks the account
         const email = emailFor(tc.email_kind, acct);
         const password = passwordFor(tc.password_kind, acct);
 
@@ -75,14 +76,11 @@ test.describe('FR-02 Login & account lockout', () => {
           if (tc.expected_text) await expect(login.errorBox).toContainText(tc.expected_text);
         } else {
           if (waitS > 0) {
-            // lock expires after waitS seconds: keep trying until it does
-            await expect(async () => {
-              const response = await login.attempt(email, password);
-              expect(response.status()).toBe(200);
-            }).toPass({ timeout: (waitS + 5) * 1000, intervals: [1000] });
-          } else {
-            await login.attempt(email, password);
+            // spec lock = waitS seconds: wait until it should have expired, then try exactly once
+            await expect.poll(() => Date.now() - lockedAt, { timeout: (waitS + 5) * 1000, intervals: [500] })
+              .toBeGreaterThan((waitS + 1) * 1000);
           }
+          await login.attempt(email, password);
           await login.expectLoggedIn();
         }
       } finally {
