@@ -1,13 +1,13 @@
-id,type,title,wrong_attempts,email_kind,password_kind,wait_after_lock_s,expected_outcome,expected_text,spec_ref,hw02_ref,blocked_field,expected_validity
-FR02-A01,positive,Verify login succeeds with valid email and password,0,valid,valid,0,logged_in,,FR-02 JWT returned and stored,FR02-EP-01,,
-FR02-A02,positive,Verify login succeeds after 1 wrong attempt (below threshold),1,valid,valid,0,logged_in,,FR-02 lock only from 3rd wrong,FR02-BVA-02,,
-FR02-A03,bva,Verify login succeeds after 2 wrong attempts (just below threshold 3),2,valid,valid,0,logged_in,,FR-02 lock from 3 wrong,FR02-BVA-03,,
-FR02-A04,negative,Verify login is rejected when password is wrong,0,valid,wrong,0,rejected,Đăng nhập thất bại,FR-02 error message,,,
-FR02-A05,negative,Verify login is rejected for unregistered email with the same generic error,0,unregistered,wrong,0,rejected,Đăng nhập thất bại,FR-02 no cause details,,,
-FR02-A06,negative,Verify form blocks submit when email is empty,0,empty,valid,0,blocked_client,,FR-02/FR-22 email field validation,FR02-EP-06,email,valueMissing
-FR02-A07,negative,Verify form blocks submit when password is empty,0,valid,empty,0,blocked_client,,FR-22 required field,,password,valueMissing
-FR02-A08,negative,Verify form blocks submit when email format is invalid (missing @),0,malformed,valid,0,blocked_client,,FR-02/FR-22 email type=email,FR02-EP-08,email,typeMismatch
-FR02-A09,negative,Verify SQL-like email does not bypass login or cause server error,0,sqli,wrong,0,rejected,Đăng nhập thất bại,SEC-05 parameterized query,,,
-FR02-A10,bva,Verify correct password is rejected after exactly 3 wrong attempts (locked),3,valid,valid,0,rejected,Đăng nhập thất bại,FR-02 lock 30s from 3 wrong,FR02-BVA-04,,
-FR02-A11,bva,Verify account stays locked after 4 wrong attempts,4,valid,valid,0,rejected,Đăng nhập thất bại,FR-02 3 or more wrong,FR02-BVA-05,,
-FR02-A12,edge,Verify login succeeds once the 30s lock has expired,3,valid,valid,30,logged_in,,FR-02 lock 30 seconds,FR02-BVA-09,,
+id,type,title,wrong_attempts,email_kind,password_kind,wait_after_lock_s,expected_outcome,expected_text,spec_ref,hw02_ref,blocked_field,expected_validity,locked_after_wrong
+FR02-A01,positive,Verify login succeeds with valid email and password,0,valid,valid,0,logged_in,,FR-02 JWT returned and stored,FR02-EP-01,,,
+FR02-A02,positive,Verify login succeeds after 1 wrong attempt (below threshold),1,valid,valid,0,logged_in,,FR-02 lock only from 3rd wrong,FR02-BVA-02,,,no
+FR02-A03,bva,Verify login succeeds after 2 wrong attempts (just below threshold 3),2,valid,valid,0,logged_in,,FR-02 lock from 3 wrong,FR02-BVA-03,,,no
+FR02-A04,negative,Verify login is rejected when password is wrong,0,valid,wrong,0,rejected,Đăng nhập thất bại,FR-02 error message,,,,
+FR02-A05,negative,Verify login is rejected for unregistered email with the same generic error,0,unregistered,wrong,0,rejected,Đăng nhập thất bại,FR-02 no cause details,,,,
+FR02-A06,negative,Verify form blocks submit when email is empty,0,empty,valid,0,blocked_client,,FR-02/FR-22 email field validation,FR02-EP-06,email,valueMissing,
+FR02-A07,negative,Verify form blocks submit when password is empty,0,valid,empty,0,blocked_client,,FR-22 required field,,password,valueMissing,
+FR02-A08,negative,Verify form blocks submit when email format is invalid (missing @),0,malformed,valid,0,blocked_client,,FR-02/FR-22 email type=email,FR02-EP-08,email,typeMismatch,
+FR02-A09,negative,Verify SQL-like email does not bypass login or cause server error,0,sqli,wrong,0,rejected,Đăng nhập thất bại,SEC-05 parameterized query,,,,
+FR02-A10,bva,Verify correct password is rejected after exactly 3 wrong attempts (locked),3,valid,valid,0,rejected,Đăng nhập thất bại,FR-02 lock 30s from 3 wrong,FR02-BVA-04,,,yes
+FR02-A11,bva,Verify account stays locked after 4 wrong attempts,4,valid,valid,0,rejected,Đăng nhập thất bại,FR-02 3 or more wrong,FR02-BVA-05,,,yes
+FR02-A12,edge,Verify login succeeds once the 30s lock has expired,3,valid,valid,30,logged_in,,FR-02 lock 30 seconds,FR02-BVA-09,,,yes

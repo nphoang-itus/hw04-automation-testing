@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
-import { createTestAccount, deleteTestAccount, TestAccount } from '../utils/api';
+import { createTestAccount, deleteTestAccount, getAccountState, TestAccount } from '../utils/api';
 import { loadData } from '../utils/data';
 
 interface LoginCase {
@@ -15,6 +15,7 @@ interface LoginCase {
   expected_text: string;
   blocked_field: 'email' | 'password' | '';
   expected_validity: 'valueMissing' | 'typeMismatch' | '';
+  locked_after_wrong: 'yes' | 'no' | '';
 }
 
 const WRONG_PASSWORD = 'Wrong@1234';
@@ -53,6 +54,13 @@ test.describe('FR-02 Login & account lockout', () => {
 
         for (let i = 0; i < Number(tc.wrong_attempts); i++) {
           await login.attempt(acct.email, WRONG_PASSWORD);
+        }
+
+        // spec: locked from the 3rd consecutive wrong attempt, not before
+        if (tc.locked_after_wrong) {
+          const state = await getAccountState(request, acct.email);
+          if (tc.locked_after_wrong === 'yes') expect(state.locked_until).not.toBeNull();
+          else expect(state.locked_until).toBeNull();
         }
 
         const lockedAt = Date.now(); // the last wrong attempt is the one that locks the account
