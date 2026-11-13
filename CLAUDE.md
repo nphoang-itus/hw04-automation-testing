@@ -14,6 +14,9 @@ After finishing each user prompt, before the final reply:
 
 **Exception:** if the user says a prompt is a chore / trivial task (`việc vặt`), skip the audit for it. To keep the log consistent, ask the user to start such prompts with `[chore]` (the script skips them); if they only say so in words, remove nothing from the log but add no audit row and note "chore, not audited" in `docs/ai/chore-turns.md`.
 
+## Agent Skill
+Reusable workflow: `.claude/skills/data-driven-playwright/` (SKILL.md, reference.md, templates/, scripts/new_feature.py, scripts/validate_feature.py). Use it for FR-08, FR-16 and any new feature; run `validate_feature.py <prefix>` before calling a feature done.
+
 ## Rules
 - AI-first, step by step per feature (analyse → locators → data file → script → assertions → multi-browser); never one generic prompt.
 - Test data only in `data/*.csv|json`; ≥ 12 cases per feature; ≥ 3 distinct assertion patterns; 3 browsers; HTML report shows `Run by: 23120264`.

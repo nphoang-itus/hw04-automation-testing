@@ -28,4 +28,4 @@ Test data files: `data/fr02-login-lockout.csv, fr08-checkout.csv, fr16-import-cs
 See `bug-report.md` and GitHub Issues links.
 
 ## 7. Agent Skill
-Summary of `skill/SKILL.md` + demo link.
+Skill: `.claude/skills/data-driven-playwright/` (workflow P1–P7, templates, `new_feature.py`, `validate_feature.py`, lessons from FR-02) + demo video link (to record).

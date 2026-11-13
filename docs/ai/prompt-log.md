@@ -521,6 +521,25 @@ thực hiện push và tạo issues trên repo https://github.com/tkob-team/esho
 - **Output (verbatim, text only):**
 ````text
 Mảng title trong zsh đánh số từ 1 nên các title bị lệch một vị trí so với nội dung. Tôi sửa lại title của 5 issue vừa tạo, rồi tạo issue còn thiếu (bug 1).
+
+Đã push và tạo 6 GitHub Issue trên `tkob-team/eshop-sut`. Tôi chỉ tạo issue mới, không đụng tới issue cũ của nhóm.
+
+| Issue | Nội dung |
+|---|---|
+| [#280](https://github.com/tkob-team/eshop-sut/issues/280) | Bộ đếm đăng nhập sai tăng 2/lần (khóa ngay ở lần sai thứ 2) |
+| [#275](https://github.com/tkob-team/eshop-sut/issues/275) | Thời gian khóa là 180 giây thay vì 30 giây |
+| [#276](https://github.com/tkob-team/eshop-sut/issues/276) | Ô email là `type=text`, không validate định dạng |
+| [#277](https://github.com/tkob-team/eshop-sut/issues/277) | Ô mật khẩu là `type=text`, hiển thị rõ |
+| [#278](https://github.com/tkob-team/eshop-sut/issues/278) | Phản hồi khi bị khóa khác phản hồi sai mật khẩu (lộ trạng thái khóa) |
+| [#279](https://github.com/tkob-team/eshop-sut/issues/279) | Phản hồi đăng nhập trả mật khẩu dạng plaintext (SEC-01) |
+
+- **Tên và nhãn:** tất cả issue có tiền tố `[HW04][FR-02]` và nhãn `bug`, khác hẳn các issue HW02 như #62–#64 nên không trùng title. Riêng #278 trùng nội dung với #63 cũ, nhưng vì là bài riêng nên vẫn tạo mới.
+- **Nội dung:** bằng tiếng Việt, gồm đặc tả, bước tái hiện, kết quả mong đợi và thực tế. Ảnh bằng chứng nhúng từ repo của bạn, tôi đã kiểm tra các link ảnh trả về HTTP 200.
+- **Push:** repo `hw04-automation-testing` đã lên `ac496d5`. `docs/bug-report.md` đã gắn link #275–#280.
+
+**Lỗi của tôi:** lần tạo đầu, mảng title trong zsh bắt đầu từ chỉ số 1 nên #275–#279 bị gán title của bug bên cạnh. Tôi đã sửa bằng `gh issue edit` và đọc lại từng issue để đối chiếu title, nội dung và ảnh, giờ đều khớp. Hai issue (#276, #277) còn thừa ký tự `\"` trong nội dung, cũng đã sửa. Lịch sử chỉnh sửa trên GitHub vẫn giữ các title sai lúc đầu. Việc này được ghi trong dòng audit #14 và cuối `docs/bug-report.md`.
+
+Bạn mở thử vài issue để kiểm tra ảnh hiển thị đúng nhé. FR-02 coi như xong trừ phần báo cáo cuối. Bước tiếp theo là FR-08, bạn muốn tôi làm theo quy trình P1 → P7 như FR-02 không?
 ````
 
 ---

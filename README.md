@@ -60,6 +60,6 @@ data/       one CSV per feature
 utils/      data loader
 reports/    HTML reports per browser (chromium, firefox, webkit)
 docs/       report.md, ai-audit-report.md, ai-critique.md, bug-report.md, git-commit-log.txt, evidence/
-skill/      Agent Skill (SKILL.md)
+.claude/skills/data-driven-playwright/   Agent Skill (SKILL.md, reference.md, templates/, scripts/)
 scripts/    run-all.sh, gen-commit-log.sh
 ```
