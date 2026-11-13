@@ -116,6 +116,42 @@ bây giờ hãy bắt đầu với task đầu tiên là Task 1: Script automati
 - **Output (verbatim, text only):**
 ````text
 Đang đọc code đăng nhập của SUT (locator, logic khóa) để lập plan FR-02 sát thực tế.
+
+Plan FR-02 và file kỹ thuật từ slide đã xong, đã commit và push (`28dfad0`). Tôi chưa viết code test nào. Phát hiện chính khi đọc code SUT là phần "giả thuyết" bên dưới.
+
+**Hai file mới**
+- `docs/techniques-from-slides.md`: gom từ 3 slide (Automation & Regression AI-First, S12, Test Cases AI-First), mỗi ý có số trang. Gồm:
+  - chọn test nào để automate;
+  - cấu trúc 3A (Arrange–Act–Assert);
+  - data-driven + Page Object Model;
+  - locator và assertion ổn định, chống flaky;
+  - multi-browser;
+  - mẫu prompt AI-first và 4 kiểu AI hay sai;
+  - nguyên nhân automation thất bại.
+- `docs/plan-FR02.md`: plan cho FR-02, gồm:
+  - 21 test case (14 luồng đăng nhập trong CSV, 7 kiểm tra cấu trúc trong JSON), kỳ vọng lấy theo spec;
+  - 7 bước làm với AI, từ P1 đến P7;
+  - lịch 8 commit có sửa file test;
+  - tiêu chí hoàn thành và danh sách test không automate.
+
+**Giả thuyết từ đọc code SUT (chưa phải bug, chờ chạy test xác nhận)**
+- Bộ đếm sai tăng 2 thay vì 1, khóa 180 giây thay vì 30 giây.
+- Ô email và ô mật khẩu đều là `type="text"`.
+- Phản hồi đăng nhập trả cả mật khẩu thô.
+- Thông báo khóa khác thông báo sai thông tin (403 và 401), nên lộ trạng thái tài khoản.
+- Tiêu đề trang ghi "Đăng Ký".
+
+Các lỗi này khớp với bug của HW02, nên HW04 dùng làm regression suite.
+
+**Quyết định thiết kế**
+- Mỗi test tự tạo tài khoản riêng qua `/api/register`, dùng email có tên browser, rồi xóa ở teardown.
+- Đọc `login_attempts` qua `/api/admin/users` để kiểm bộ đếm.
+- Không dùng `getByLabel`, vì `<label>` trong `Login.jsx` không gắn với ô nhập.
+- Chờ hết khóa bằng `toPass` có timeout, không dùng sleep cố định.
+
+Tôi chưa đọc lại slide S04 (Domain Testing) và S06.1 (State Transition), mà dùng lại phân tích EP/BVA FR-02 của chính bạn từ HW02. Số trang trích từ footer PDF, bạn nên đối chiếu lại.
+
+Bạn xem `plan-FR02.md` mục 4 (21 test case) và mục 8 (rủi ro). Nếu đồng ý, tôi bắt đầu bước P1–P2 của AI-first.
 ````
 
 ---
