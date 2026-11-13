@@ -1,0 +1,274 @@
+
+Running 18 tests using 2 workers
+
+  ✓   2 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A01 [positive] Verify login succeeds with valid email and password (547ms)
+  ✓   3 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A02 [positive] Verify login succeeds after 1 wrong attempt (below threshold) (266ms)
+  ✘   1 [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B01 [attribute] Verify email input has type=email (5.5s)
+  ✘   4 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A03 [bva] Verify login succeeds after 2 wrong attempts (just below threshold 3) (5.3s)
+  ✓   6 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A04 [negative] Verify login is rejected when password is wrong (266ms)
+  ✓   7 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A05 [negative] Verify login is rejected for unregistered email with the same generic error (231ms)
+  ✓   8 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A06 [negative] Verify form blocks submit when email is empty (197ms)
+  ✓   9 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A07 [negative] Verify form blocks submit when password is empty (198ms)
+  ✘  10 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A08 [negative] Verify form blocks submit when email format is invalid (missing @) (242ms)
+  ✓  11 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A09 [negative] Verify SQL-like email does not bypass login or cause server error (272ms)
+  ✓  12 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A10 [bva] Verify correct password is rejected after exactly 3 wrong attempts (locked) (367ms)
+  ✓  13 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A11 [bva] Verify account stays locked after 4 wrong attempts (400ms)
+  ✘   5 [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B02 [attribute] Verify password input has type=password (5.2s)
+  ✘  15 [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B03 [state] Verify one wrong attempt increments login_attempts by exactly 1 (275ms)
+  ✓  16 [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B04 [message] Verify locked-account error text equals wrong-password error text (454ms)
+  ✘  17 [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B05 [security] Verify login response body does not contain the password (215ms)
+  ✓  18 [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B06 [token] Verify UI token works as Bearer on an authenticated endpoint (297ms)
+  ✘  14 [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A12 [edge] Verify login succeeds once the 30s lock has expired (34.6s)
+
+
+  1) [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B01 [attribute] Verify email input has type=email 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('form input').first()
+    Expected: "email"
+    Received: "text"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('form input').first() with timeout 5000ms
+      - waiting for locator('form input').first()
+        14 × locator resolved to <input value="" required="" type="text" class="w-full border p-2 rounded"/>
+           - unexpected value "text"
+
+
+      37 |           case 'attribute': {
+      38 |             const input = c.target === 'email_input' ? login.email : login.password;
+    > 39 |             await expect(input).toHaveAttribute(c.attribute!, c.expected!);
+         |                                 ^
+      40 |             break;
+      41 |           }
+      42 |           case 'attempts_after_wrong': {
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-checks.spec.ts:39:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-28830--email-input-has-type-email-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-28830--email-input-has-type-email-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-28830--email-input-has-type-email-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-28830--email-input-has-type-email-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B02 [attribute] Verify password input has type=password 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('form input').nth(1)
+    Expected: "password"
+    Received: "text"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('form input').nth(1) with timeout 5000ms
+      - waiting for locator('form input').nth(1)
+        14 × locator resolved to <input value="" required="" type="text" class="w-full border p-2 rounded"/>
+           - unexpected value "text"
+
+
+      37 |           case 'attribute': {
+      38 |             const input = c.target === 'email_input' ? login.email : login.password;
+    > 39 |             await expect(input).toHaveAttribute(c.attribute!, c.expected!);
+         |                                 ^
+      40 |             break;
+      41 |           }
+      42 |           case 'attempts_after_wrong': {
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-checks.spec.ts:39:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-7f3fc-ord-input-has-type-password-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-7f3fc-ord-input-has-type-password-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-7f3fc-ord-input-has-type-password-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-7f3fc-ord-input-has-type-password-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B03 [state] Verify one wrong attempt increments login_attempts by exactly 1 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      43 |             for (let i = 0; i < c.wrong_attempts!; i++) await login.attempt(acct.email, WRONG_PASSWORD);
+      44 |             const state = await getAccountState(request, acct.email);
+    > 45 |             expect(state.login_attempts).toBe(c.expected_attempts);
+         |                                          ^
+      46 |             if (!c.expected_locked) expect(state.locked_until).toBeNull();
+      47 |             break;
+      48 |           }
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-checks.spec.ts:45:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-0e353-login-attempts-by-exactly-1-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-0e353-login-attempts-by-exactly-1-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-0e353-login-attempts-by-exactly-1-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-0e353-login-attempts-by-exactly-1-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B05 [security] Verify login response body does not contain the password 
+
+    Error: expect(received).not.toHaveProperty(path)
+
+    Expected path: not "password"
+
+    Received value: "Pw@23120264"
+
+      66 |             const { body } = await loginApi(request, acct.email, acct.password);
+      67 |             expect(body).not.toHaveProperty(c.field!);
+    > 68 |             expect(body.user).not.toHaveProperty(c.field!);
+         |                                   ^
+      69 |             break;
+      70 |           }
+      71 |           case 'token_bearer': {
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-checks.spec.ts:68:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-a2f00-es-not-contain-the-password-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-a2f00-es-not-contain-the-password-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-a2f00-es-not-contain-the-password-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-checks-FR-02-Structur-a2f00-es-not-contain-the-password-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A03 [bva] Verify login succeeds after 2 wrong attempts (just below threshold 3) 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/$/
+    Received string:  "http://localhost:5173/login"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        14 × locator resolved to <html lang="en">…</html>
+           - unexpected value "http://localhost:5173/login"
+
+
+       at ../pages/LoginPage.ts:62
+
+      60 |
+      61 |   async expectLoggedIn() {
+    > 62 |     await expect(this.page).toHaveURL(/\/$/);
+         |                             ^
+      63 |     await expect(this.logoutButton).toBeVisible();
+      64 |     expect(await this.token()).toBeTruthy();
+      65 |   }
+        at LoginPage.expectLoggedIn (/Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/pages/LoginPage.ts:62:29)
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-login-lockout.spec.ts:86:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-00c52-pts-just-below-threshold-3--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-00c52-pts-just-below-threshold-3--chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-00c52-pts-just-below-threshold-3--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-00c52-pts-just-below-threshold-3--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A08 [negative] Verify form blocks submit when email format is invalid (missing @) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      65 |           const field = tc.email_kind === 'valid' ? 'password' : 'email';
+      66 |           const validity = await login.validity(field);
+    > 67 |           if (tc.email_kind === 'malformed') expect(validity.typeMismatch).toBe(true);
+         |                                                                            ^
+      68 |           else expect(validity.valueMissing).toBe(true);
+      69 |           expect(apiCalls).toBe(0);
+      70 |           await expect(page).toHaveURL(/\/login$/);
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-login-lockout.spec.ts:67:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-8c163--format-is-invalid-missing--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-8c163--format-is-invalid-missing--chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-8c163--format-is-invalid-missing--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-8c163--format-is-invalid-missing--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A12 [edge] Verify login succeeds once the 30s lock has expired 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 403
+
+    Call Log:
+    - Timeout 35000ms exceeded while waiting on the predicate
+
+      80 |               const response = await login.attempt(email, password);
+      81 |               expect(response.status()).toBe(200);
+    > 82 |             }).toPass({ timeout: (waitS + 5) * 1000, intervals: [1000] });
+         |                ^
+      83 |           } else {
+      84 |             await login.attempt(email, password);
+      85 |           }
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr02-login-lockout.spec.ts:82:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-5adf4-ce-the-30s-lock-has-expired-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-5adf4-ce-the-30s-lock-has-expired-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-5adf4-ce-the-30s-lock-has-expired-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../..<scratch>/results-draft/fr02-login-lockout-FR-02-L-5adf4-ce-the-30s-lock-has-expired-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B01 [attribute] Verify email input has type=email 
+    [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B02 [attribute] Verify password input has type=password 
+    [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B03 [state] Verify one wrong attempt increments login_attempts by exactly 1 
+    [chromium] › tests/fr02-checks.spec.ts:29:5 › FR-02 Structure, state and security checks › FR02-B05 [security] Verify login response body does not contain the password 
+    [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A03 [bva] Verify login succeeds after 2 wrong attempts (just below threshold 3) 
+    [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A08 [negative] Verify form blocks submit when email format is invalid (missing @) 
+    [chromium] › tests/fr02-login-lockout.spec.ts:43:5 › FR-02 Login & account lockout › FR02-A12 [edge] Verify login succeeds once the 30s lock has expired 
+  11 passed (44.3s)

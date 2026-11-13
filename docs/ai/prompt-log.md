@@ -310,3 +310,36 @@ Tiếp theo là P5: viết spec data-driven cho FR-02 để AI sinh bản nháp 
 ````
 
 ---
+
+### #10 — 2026-11-14 02:07 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+viết spec data-driven cho FR-02 để AI sinh bản nháp nguyên bản và commit ngay trước khi sửa
+````
+- **Output (verbatim, text only):**
+````text
+Bản nháp spec FR-02 đã được commit nguyên bản, chưa sửa gì: `68dd2e5` "AI-generated draft spec (unreviewed)", chỉ commit local. Tôi chưa chạy test, nên chưa biết lỗi nào là bug của SUT, lỗi nào là lỗi của script.
+
+**Hai file spec**
+- `tests/fr02-login-lockout.spec.ts`:
+  - Đọc 12 dòng CSV (A01–A12) bằng `loadData`, mỗi dòng là một test.
+  - `emailFor` và `passwordFor` chuyển loại dữ liệu (`valid`, `wrong`, `empty`, `malformed`, `sqli`, `unregistered`) thành giá trị thật.
+  - Ba kiểu kết quả: `logged_in`, `rejected`, `blocked_client`.
+  - A12 dùng `toPass` thử lại, tối đa 35 giây, không dùng sleep.
+  - Mỗi test tạo tài khoản riêng và xóa trong `finally`.
+- `tests/fr02-checks.spec.ts`: đọc 6 check từ JSON (B01–B06), rẽ nhánh theo loại check.
+
+`tsc --noEmit` không lỗi, và `playwright test --list` liệt kê đủ **18 test**. Các kiểu assertion dùng trong bản nháp: URL, hiển thị, text, token có giá trị, mã HTTP, validity HTML5, số request, thuộc tính, trạng thái đọc qua admin API.
+
+**Vài điểm yếu đã thấy (chưa sửa, để B7)**
+- B04 chỉ so sánh text trên UI. Trang chỉ có một chuỗi lỗi cố định nên test này có thể pass một cách vô nghĩa.
+- Nhánh `blocked_client` chọn ô cần kiểm dựa vào `email_kind`, hơi vụng.
+- A12 thử đăng nhập lặp lại trong lúc còn bị khóa.
+
+Trong repo có hai thứ lẻ chưa commit: `tests/_smoke.spec.ts` (file smoke test tạm) và thư mục `reports/all/`. File smoke sẽ bị chạy chung với suite nếu bạn chạy `npm run test:all`. Bạn xóa tay giúp, hoặc cho phép thì tôi xóa.
+
+Dòng audit #9 đã thêm (PENDING), thống kê giờ là 9 artifact. Bạn muốn sang P6 (hỏi lại AI "còn thiếu input hay biên nào?") hay chạy thử Chromium trước (P7)? Tôi đề xuất chạy trước, để phân biệt lỗi script và bug SUT có bằng chứng thật.
+````
+
+---
