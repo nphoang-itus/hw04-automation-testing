@@ -25,6 +25,15 @@
 | Browser runs | `TODO` (≥ 9) |
 | Bugs found | `TODO` |
 
+## Progress
+| Feature | Automated | Executed | Passed | Failed | Browser runs | Bugs (distinct) |
+|---|---|---|---|---|---|---|
+| A FR-02 | 20 | 60 (20 × 3) | 33 | 27 | 3 | 6 |
+| B FR-08 | 0 | – | – | – | 0 | – |
+| C FR-16 | 0 | – | – | – | 0 | – |
+
+Details: `docs/fr02-multibrowser-results.md`.
+
 ## Self-assessment
 | No. | Criteria | Grade | Self-Assessed Grade |
 |---|---|---|---|
