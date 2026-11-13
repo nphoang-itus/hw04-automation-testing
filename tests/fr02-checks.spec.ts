@@ -7,7 +7,7 @@ interface Check {
   id: string;
   type: string;
   title: string;
-  check: 'attribute' | 'attempts_after_wrong' | 'message_equal' | 'api_body_lacks' | 'token_bearer';
+  check: 'attribute' | 'attempts_after_wrong' | 'attempts_after_success' | 'message_equal' | 'api_body_lacks' | 'token_bearer';
   target?: 'email_input' | 'password_input';
   attribute?: string;
   expected?: string;
@@ -44,6 +44,15 @@ test.describe('FR-02 Structure, state and security checks', () => {
             const state = await getAccountState(request, acct.email);
             expect(state.login_attempts).toBe(c.expected_attempts);
             if (!c.expected_locked) expect(state.locked_until).toBeNull();
+            break;
+          }
+          case 'attempts_after_success': {
+            for (let i = 0; i < c.wrong_attempts!; i++) await login.attempt(acct.email, WRONG_PASSWORD);
+            await login.attempt(acct.email, acct.password);
+            await login.expectLoggedIn();
+            const state = await getAccountState(request, acct.email);
+            expect(state.login_attempts).toBe(c.expected_attempts);
+            expect(state.locked_until).toBeNull();
             break;
           }
           case 'message_equal': {

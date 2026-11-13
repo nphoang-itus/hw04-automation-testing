@@ -1,20 +1,78 @@
 [
-  { "id": "FR02-B01", "type": "attribute", "title": "Verify email input has type=email",
-    "check": "attribute", "target": "email_input", "attribute": "type", "expected": "email",
-    "spec_ref": "FR-02, FR-22", "hw02_ref": "FR02-EP-02" },
-  { "id": "FR02-B02", "type": "attribute", "title": "Verify password input has type=password",
-    "check": "attribute", "target": "password_input", "attribute": "type", "expected": "password",
-    "spec_ref": "FR-22", "hw02_ref": "FR02-EP-02" },
-  { "id": "FR02-B03", "type": "state", "title": "Verify one wrong attempt increments login_attempts by exactly 1",
-    "check": "attempts_after_wrong", "wrong_attempts": 1, "expected_attempts": 1, "expected_locked": false,
-    "spec_ref": "FR-02 counter +1", "hw02_ref": "FR02-BVA-02" },
-  { "id": "FR02-B04", "type": "message", "title": "Verify locked-account error text equals wrong-password error text",
-    "check": "message_equal", "lock_after": 3, "must_not_contain": ["khóa", "lock"],
-    "spec_ref": "FR-02 no cause details (interpretation confirmed by student 2026-11-14)", "hw02_ref": "" },
-  { "id": "FR02-B05", "type": "security", "title": "Verify login response body does not contain the password",
-    "check": "api_body_lacks", "field": "password",
-    "spec_ref": "SEC-01", "hw02_ref": "FR02-EP-04" },
-  { "id": "FR02-B06", "type": "token", "title": "Verify UI token works as Bearer on an authenticated endpoint",
-    "check": "token_bearer", "endpoint": "/api/users/me", "expected_status": 200,
-    "spec_ref": "FR-02 Authorization: Bearer", "hw02_ref": "FR02-EP-04" }
+  {
+    "id": "FR02-B01",
+    "type": "attribute",
+    "title": "Verify email input has type=email",
+    "check": "attribute",
+    "target": "email_input",
+    "attribute": "type",
+    "expected": "email",
+    "spec_ref": "FR-02, FR-22",
+    "hw02_ref": "FR02-EP-02"
+  },
+  {
+    "id": "FR02-B02",
+    "type": "attribute",
+    "title": "Verify password input has type=password",
+    "check": "attribute",
+    "target": "password_input",
+    "attribute": "type",
+    "expected": "password",
+    "spec_ref": "FR-22",
+    "hw02_ref": "FR02-EP-02"
+  },
+  {
+    "id": "FR02-B03",
+    "type": "state",
+    "title": "Verify one wrong attempt increments login_attempts by exactly 1",
+    "check": "attempts_after_wrong",
+    "wrong_attempts": 1,
+    "expected_attempts": 1,
+    "expected_locked": false,
+    "spec_ref": "FR-02 counter +1",
+    "hw02_ref": "FR02-BVA-02"
+  },
+  {
+    "id": "FR02-B04",
+    "type": "message",
+    "title": "Verify locked-account error text equals wrong-password error text",
+    "check": "message_equal",
+    "lock_after": 3,
+    "must_not_contain": [
+      "khóa",
+      "lock"
+    ],
+    "spec_ref": "FR-02 no cause details (interpretation confirmed by student 2026-11-14)",
+    "hw02_ref": ""
+  },
+  {
+    "id": "FR02-B05",
+    "type": "security",
+    "title": "Verify login response body does not contain the password",
+    "check": "api_body_lacks",
+    "field": "password",
+    "spec_ref": "SEC-01",
+    "hw02_ref": "FR02-EP-04"
+  },
+  {
+    "id": "FR02-B06",
+    "type": "token",
+    "title": "Verify UI token works as Bearer on an authenticated endpoint",
+    "check": "token_bearer",
+    "endpoint": "/api/users/me",
+    "expected_status": 200,
+    "spec_ref": "FR-02 Authorization: Bearer",
+    "hw02_ref": "FR02-EP-04"
+  },
+  {
+    "id": "FR02-B07",
+    "type": "state",
+    "title": "Verify a successful login resets login_attempts to 0",
+    "check": "attempts_after_success",
+    "wrong_attempts": 1,
+    "expected_attempts": 0,
+    "expected_locked": false,
+    "spec_ref": "FR-02 consecutive wrong attempts",
+    "hw02_ref": ""
+  }
 ]
