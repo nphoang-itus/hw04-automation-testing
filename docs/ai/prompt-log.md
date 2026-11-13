@@ -195,3 +195,30 @@ Bước tiếp theo là P2: danh sách test case dạng bảng theo mẫu ROLE/C
 ````
 
 ---
+
+### #6 — 2026-11-14 01:52 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+lập danh sách test case dạng bảng theo mẫu ROLE/CONTEXT/TASK/FORMAT, kèm đối chiếu kỳ vọng với spec
+````
+- **Output (verbatim, text only):**
+````text
+Xong bước P2. Bảng test case nằm ở `docs/fr02-p2-testcases.md`, đã commit và push (`5675f3a`). Tôi chưa chạy test nào.
+
+**Nội dung file**
+- Prompt viết lại theo mẫu ROLE/CONTEXT/TASK/FORMAT/CONSTRAINTS.
+- 21 test case, mỗi case có tiêu đề dạng Action + Function + Condition, bước, dữ liệu, kết quả mong đợi và dòng spec tương ứng:
+  - Nhóm A (A01–A14): luồng đăng nhập, gồm positive, negative, biên 2/3/4 lần sai, hết khóa sau 30 giây và 2 case chuỗi 10.000 ký tự.
+  - Nhóm B (B01–B07): `type` của hai ô nhập, bộ đếm tăng đúng 1, thông báo khóa, phản hồi login không lộ `password`, token dùng được với Bearer, tiêu đề trang.
+- Mỗi kỳ vọng gắn nhãn độ tin cậy: **S** (trích thẳng spec), **D** (suy ra hợp lý) hoặc **A** (giả định). Có thêm bảng đối chiếu kỳ vọng với spec và bảng dự đoán kết quả. Bảng dự đoán chỉ để so sánh sau khi chạy, không dùng để viết kỳ vọng.
+
+**Ba điểm cần bạn quyết trước khi sang P3**
+1. **B04 (thông báo khi bị khóa):** spec vừa yêu cầu "thông báo phù hợp" vừa yêu cầu "không lộ nguyên nhân". Tôi hiểu là UI phải hiện lỗi giống hệt lúc sai mật khẩu. Bạn xác nhận cách hiểu này nhé.
+2. **A13, A14, B07:** tôi gắn nhãn **A** cho A13/A14 vì spec không nêu giới hạn độ dài. B07 thực ra thuộc FR-21, không phải FR-02. Bạn muốn giữ hay bỏ?
+3. **Email hoa/thường, khoảng trắng đầu/cuối và bộ đếm sau khi hết khóa:** spec im lặng nên tôi không tạo test case. Bạn đồng ý để ghi là spec gap trong báo cáo không?
+
+Tôi đã thêm dòng audit #6 (verdict PENDING, thống kê 6 artifact). Mục #6 trong `prompt-log.md` sẽ xuất hiện sau lần chạy `ailog.py` kế tiếp. Bạn trả lời ba câu trên thì tôi làm P3 (file dữ liệu CSV/JSON).
+````
+
+---

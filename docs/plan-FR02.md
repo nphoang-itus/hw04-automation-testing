@@ -25,7 +25,7 @@ Mục tiêu đề (§6 Task 1): ≥ 12 TC tự động hóa, dữ liệu ở CSV
 | Test cần mắt người (vị trí thông báo lỗi, dấu `*` bắt buộc, màu nút) | **Không automate**, ghi lý do | [S12 tr.13], [AR tr.4] |
 | API vs UI | UI cho hành vi người dùng; API chỉ để arrange/oracle | Kim tự tháp [AR tr.7] |
 
-## 4. Danh sách test case tự động hóa (21 TC, ≥ 12)
+## 4. Danh sách test case tự động hóa (18 TC, ≥ 12) — chi tiết ở `docs/fr02-p2-testcases.md`; đã bỏ A13, A14, B07 theo quyết định 14/11
 Mỗi TC có ID, gắn dòng đặc tả (Traceable), kỳ vọng **theo spec**. Nguồn = ID tương ứng trong HW02 (dùng lại phân tích EP/BVA của chính sinh viên).
 
 **Nhóm A — luồng đăng nhập (`data/fr02-login-lockout.csv`, một runner, nhiều dòng)**
@@ -88,8 +88,8 @@ Mọi prompt/output được `scripts/ailog.py` ghi vào `docs/ai/prompt-log.md`
 (+ `docs:` commit cho bug report, không tính vào 8.)
 
 ## 7. Tiêu chí hoàn thành FR-02
-- [ ] 21 TC trong `tests/fr02-login-lockout.spec.ts` (+ `fr02-checks.spec.ts`), data ở `data/`
-- [ ] 3 report: `reports/chromium|firefox|webkit/index.html` hiển thị `Run by: 23120264` + ISO timestamp → 63 lượt chạy test, 3 browser-run
+- [ ] 18 TC trong `tests/fr02-login-lockout.spec.ts` (+ `fr02-checks.spec.ts`), data ở `data/`
+- [ ] 3 report: `reports/chromium|firefox|webkit/index.html` hiển thị `Run by: 23120264` + ISO timestamp → 54 lượt chạy test, 3 browser-run
 - [ ] Bảng "AI sai/thiếu gì và vì sao" (ít nhất locator, assertion yếu, edge thiếu, flaky) trong `docs/report.md` §4
 - [ ] Bug thật (dự kiến H1–H7) → `docs/bug-report.md` + GitHub Issue kèm ảnh
 - [ ] Danh sách TC không automate + lý do

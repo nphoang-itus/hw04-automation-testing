@@ -60,3 +60,8 @@ Dự kiến **Fail**: A03, A08, A10–A12 (do khóa sớm/lâu hơn: A03 fail v�
 1. Duyệt/loại TC trong bảng (đặc biệt A13, A14, B07).
 2. Chốt cách hiểu B04.
 3. Đồng ý không có TC về email hoa/thường và bộ đếm sau hết khóa.
+
+## 7. Quyết định của sinh viên (14/11/2026)
+1. **B04:** đồng ý cách hiểu — UI khi khóa hiển thị lỗi giống khi sai mật khẩu, không nêu "khóa".
+2. **Bỏ A13, A14, B07** (chỉ làm những gì liên quan tới FR đã chọn; B07 thuộc FR-21, A13/A14 spec im lặng). Còn **18 TC**: A01–A12 và B01–B06.
+3. **Email hoa/thường, khoảng trắng, bộ đếm sau hết khóa:** không tạo TC, ghi là spec gap, làm đúng theo spec.
