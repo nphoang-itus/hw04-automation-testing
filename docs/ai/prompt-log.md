@@ -440,3 +440,52 @@ Lưu ý: tôi truyền đường dẫn spec FR-02 vào `npm run test:all` để 
 ````
 
 ---
+
+### #14 — 2026-11-14 02:42 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+<task-notification>
+<task-id>bhm63goxm</task-id>
+<tool-use-id>toolu_01Gqy7KVVimZXkU6u75W38PB</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-nphoang-Developer-hcmus-software-testing-HW04-Automation-Testing/3bf8fe0f-afb8-4d74-85ab-3b5e598e15fe/tasks/bhm63goxm.output</output-file>
+<status>completed</status>
+<summary>Background command "Run FR-02 suite on 3 browsers via npm script" completed (exit code -1)</summary>
+</task-notification>
+````
+- **Output (verbatim, text only):**
+````text
+Đã cài WebKit (Firefox có sẵn) và chạy `npm run test:all` cho FR-02: cả 3 browser đều cho cùng kết quả **20 test, 11 pass, 9 fail**. Đã commit local (`3a94b99`), chưa push.
+
+| Browser | Pass | Fail | Thời gian |
+|---|---|---|---|
+| Chromium | 11 | 9 | 41,7 giây |
+| Firefox | 11 | 9 | 48,9 giây |
+| WebKit | 11 | 9 | 48,3 giây |
+
+- 9 test fail giống hệt nhau ở cả 3 browser: A03, A08, A12, A13, B01, B02, B03, B04, B05. Không có lỗi riêng của một engine, nguyên nhân là 6 bug SUT đã phân tích ở bước P6.
+- Report nằm ở `reports/chromium`, `reports/firefox`, `reports/webkit`. Tôi đã mở từng file bằng trình duyệt để kiểm tra: tiêu đề hiển thị `Run by: 23120264 | <ISO timestamp>` ở cả 3. Lúc đầu tôi grep trong `index.html` không thấy chuỗi đó, vì tiêu đề được render bằng JS.
+- Tôi đã sửa `scripts/run-all.sh` để nhận tham số, rồi chạy `npm run test:all -- tests/fr02-login-lockout.spec.ts tests/fr02-checks.spec.ts`. Việc này để bỏ qua các file khung FR-08/FR-16 (chỉ có dữ liệu TODO, sẽ cho kết quả pass giả).
+- Kết quả được ghi ở `docs/fr02-multibrowser-results.md` và log `docs/evidence/fr02-3browsers-run3.txt`. README đã có bảng tiến độ: FR-02 gồm 20 test, 60 lượt chạy, 33 pass, 27 fail, 3 browser run, 6 bug.
+
+Về prompt-log: `scripts/ailog.py` bị nhân đôi các lượt vì phiên được resume tạo thêm một transcript. Tôi đã sửa để loại trùng (`e03a7c7`), log giờ có 13 lượt và số thứ tự khớp với các dòng audit. Dòng audit #12 đã thêm với verdict VALID. WebKit ở đây là bản Playwright WebKit, không phải Safari thật.
+
+Việc còn lại cho FR-02 là viết bug report và tạo GitHub Issues kèm ảnh chụp. Ảnh chụp từ test fail nằm ở `test-results/` (đã gitignore), nhưng chụp lại bằng script riêng sẽ sạch hơn. Tôi đề xuất bước tiếp theo là làm phần bug report, gom 9 test fail thành 6 bug.
+
+Việc tạo Issues công khai lên repo GitHub của bạn thì tôi sẽ hỏi lại bạn trước khi đăng.
+````
+
+---
+
+### #15 — 2026-11-14 02:45 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+làm phần bug report, gom 9 test fail thành 6 bug
+````
+- **Output (verbatim, text only):**
+````text
+Kiểm tra nhanh ảnh vài cái trước khi viết báo cáo.
+````
+
+---
