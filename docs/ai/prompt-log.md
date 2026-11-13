@@ -343,3 +343,45 @@ Dòng audit #9 đã thêm (PENDING), thống kê giờ là 9 artifact. Bạn mu�
 ````
 
 ---
+
+### #11 — 2026-11-14 02:14 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+Chạy trước đi để phân biệt lỗi script và bug SUT
+````
+- **Output (verbatim, text only):**
+````text
+Đã chạy bản nháp trên Chromium, kết quả thật là **18 test: 11 pass, 7 fail** (44,3 giây). Cả 7 test fail đều do SUT sai spec, không có test nào fail vì lỗi script. Phân tích nằm ở `docs/fr02-p7-first-run.md`, log gốc ở `docs/evidence/fr02-draft-chromium-run1.txt`. Đã commit local (`605e57c`), chưa push.
+
+**7 test fail, đều là bug SUT**
+
+| Test | Bug | Bằng chứng |
+|---|---|---|
+| B01, A08 | Ô email là `type="text"`, không chặn email thiếu `@` | locator đúng (A01 và A06/A07 đều pass) |
+| B02 | Ô mật khẩu là `type="text"` | như trên |
+| B03 | 1 lần sai làm `login_attempts` = 2 (spec yêu cầu 1) | đọc qua admin API |
+| A03 | Sau 2 lần sai, đăng nhập đúng vẫn bị từ chối (hệ quả của bộ đếm +2) | lần sai thứ 3 trả 403 |
+| B05 | `user.password` trả mật khẩu thô trong response login | |
+| A12 | 403 liên tục suốt 35 giây | đo trực tiếp qua API: sau khi khóa, `locked_until` còn 180 giây |
+
+Tôi đã tạo một tài khoản probe để đo, rồi xóa ngay sau đó.
+
+**Các test pass nhưng assertion còn yếu**
+- **B04** luôn pass: UI chỉ có một chuỗi lỗi cố định, nên test này không bắt được việc API trả 403 khác 401.
+- **A10 và A11** không chứng minh được ngưỡng đúng là 3: tài khoản đã bị khóa từ lần sai thứ 2 do lỗi bộ đếm.
+- **A12** dùng polling mỗi giây khi đang bị khóa. Cách này mong manh, nên đổi thành poll `locked_until` qua admin API rồi đăng nhập một lần.
+
+**Chưa hoàn tất**
+- Mới chạy Chromium, chưa có report HTML chính thức nào. Firefox và WebKit chưa chạy (browser-run 0/3).
+- `tests/_smoke.spec.ts` vẫn nằm trong `tests/` dưới dạng file untracked. Bạn xóa giúp, hoặc cho phép thì tôi xóa.
+- Dòng audit #10 đã thêm (INCOMPLETE), thống kê giờ là 10 artifact.
+
+Bước tiếp theo, bạn chọn hướng nào?
+1. P6: hỏi lại AI "còn thiếu input hoặc biên nào?", rồi sửa B04, A10, A11, A12 và commit từng sửa riêng cho lịch commit.
+2. Cài Firefox và WebKit để chạy thử cả 3 browser trước khi sửa.
+
+Tôi đề xuất làm 1 trước.
+````
+
+---
