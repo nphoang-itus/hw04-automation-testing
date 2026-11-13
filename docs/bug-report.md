@@ -1,17 +1,17 @@
 # Bug Report — HW04 (EShop SUT)
 
 SUT: `eshop-sut-fithcmus` (backend :3000, web :5173). Reproduced on Chromium, Firefox, WebKit (Playwright), report `reports/<browser>/index.html`. Expected results are taken from the SUT spec (README SRS v2.0). Evidence images are real captures from the live SUT (`scripts/capture-bug-evidence.mjs`, captured 2026-11-13T19:45Z); the two UI images carry a yellow DOM annotation overlay added by the script.
-GitHub Issues: **not yet created** (see "Issues" at the end).
+GitHub Issues: created on the team repo `tkob-team/eshop-sut` (#275–#280, titles prefixed `[HW04][FR-02]`, label `bug`, evidence images linked from this repo).
 
 ## Summary — FR-02 (Feature A)
 | ID | Title | Severity | Failing tests (9) | Spec | Evidence | HW02 ref | Issue |
 |---|---|---|---|---|---|---|---|
-| BUG-FR02-01 | Wrong-attempt counter increases by 2 (account locks at the 2nd wrong attempt) | Major | A03, A13, B03 | FR-02 | `evidence/bugs/BUG-FR02-01.png` | BUG-FR02-01, 02 | – |
-| BUG-FR02-02 | Lock lasts 180 s instead of 30 s | Major | A12 | FR-02 | `evidence/bugs/BUG-FR02-02.png` | BUG-FR02-03 | – |
-| BUG-FR02-03 | Email input is `type="text"`: no HTML5 format validation | Major | A08, B01 | FR-02, FR-22 | `evidence/bugs/BUG-FR02-03.png` | BUG-FR02-04 | – |
-| BUG-FR02-04 | Password input is `type="text"`: password shown in clear | Major | B02 | FR-22 | `evidence/bugs/BUG-FR02-04.png` | BUG-FR02-05 | – |
-| BUG-FR02-05 | Locked-account response reveals the lock (differs from wrong-password response) | Major (needs spec confirmation) | B04 | FR-02 "no cause details" | `evidence/bugs/BUG-FR02-05.png` | BUG-FR02-11 | – |
-| BUG-FR02-06 | Login response returns the password in plain text | Critical | B05 | SEC-01 | `evidence/bugs/BUG-FR02-06.png` | BUG-FR02-08 | – |
+| BUG-FR02-01 | Wrong-attempt counter increases by 2 (account locks at the 2nd wrong attempt) | Major | A03, A13, B03 | FR-02 | `evidence/bugs/BUG-FR02-01.png` | BUG-FR02-01, 02 | [#280](https://github.com/tkob-team/eshop-sut/issues/280) |
+| BUG-FR02-02 | Lock lasts 180 s instead of 30 s | Major | A12 | FR-02 | `evidence/bugs/BUG-FR02-02.png` | BUG-FR02-03 | [#275](https://github.com/tkob-team/eshop-sut/issues/275) |
+| BUG-FR02-03 | Email input is `type="text"`: no HTML5 format validation | Major | A08, B01 | FR-02, FR-22 | `evidence/bugs/BUG-FR02-03.png` | BUG-FR02-04 | [#276](https://github.com/tkob-team/eshop-sut/issues/276) |
+| BUG-FR02-04 | Password input is `type="text"`: password shown in clear | Major | B02 | FR-22 | `evidence/bugs/BUG-FR02-04.png` | BUG-FR02-05 | [#277](https://github.com/tkob-team/eshop-sut/issues/277) |
+| BUG-FR02-05 | Locked-account response reveals the lock (differs from wrong-password response) | Major (needs spec confirmation) | B04 | FR-02 "no cause details" | `evidence/bugs/BUG-FR02-05.png` | BUG-FR02-11 | [#278](https://github.com/tkob-team/eshop-sut/issues/278) |
+| BUG-FR02-06 | Login response returns the password in plain text | Critical | B05 | SEC-01 | `evidence/bugs/BUG-FR02-06.png` | BUG-FR02-08 | [#279](https://github.com/tkob-team/eshop-sut/issues/279) |
 
 Test → bug mapping: A03, A13, B03 → 01 · A12 → 02 · A08, B01 → 03 · B02 → 04 · B04 → 05 · B05 → 06 (9 failing tests = 6 distinct defects; 11 tests pass on every browser).
 
@@ -66,4 +66,14 @@ Test → bug mapping: A03, A13, B03 → 01 · A12 → 02 · A08, B01 → 03 · B
 Email case sensitivity, leading/trailing spaces, input length limits, whether the counter resets after a lock expires: the spec is silent (no test was created). Cosmetic findings from HW02 (page title "Đăng Ký", error message position, missing `*`) are outside the automated scope and not re-reported here.
 
 ## Issues
-GitHub Issues with screenshots will be created after the student approves; embedding the images requires them to be pushed to the public repository first.
+Created 2026-11-14 on https://github.com/tkob-team/eshop-sut with the student's approval (existing team issues BUG-FR02-10/11/12 are from HW02; these are new, separate HW04 issues even where the defect overlaps — BUG-FR02-05 ≈ #63).
+| Bug | Issue |
+|---|---|
+| BUG-FR02-01 | #280 |
+| BUG-FR02-02 | #275 |
+| BUG-FR02-03 | #276 |
+| BUG-FR02-04 | #277 |
+| BUG-FR02-05 | #278 |
+| BUG-FR02-06 | #279 |
+
+Note: the first creation attempt used a shifted title array, so #275–#279 were first created with titles of the neighbouring bugs and then corrected with `gh issue edit`; #280 was created last. Titles and bodies were re-checked after the fix.

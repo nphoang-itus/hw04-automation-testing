@@ -486,6 +486,41 @@ làm phần bug report, gom 9 test fail thành 6 bug
 - **Output (verbatim, text only):**
 ````text
 Kiểm tra nhanh ảnh vài cái trước khi viết báo cáo.
+
+Bug report FR-02 đã xong: 9 test fail được gom thành 6 bug, ở `docs/bug-report.md`. Đã commit local (`7cd2b60`, `b639315`), chưa push và chưa tạo GitHub Issue.
+
+| Bug | Mức độ | Test fail | Spec |
+|---|---|---|---|
+| BUG-FR02-01: bộ đếm tăng 2 mỗi lần sai, khóa ngay ở lần sai thứ 2 | Major | A03, A13, B03 | FR-02 |
+| BUG-FR02-02: khóa 180 giây thay vì 30 giây | Major | A12 | FR-02 |
+| BUG-FR02-03: ô email là `type="text"` | Major | A08, B01 | FR-02, FR-22 |
+| BUG-FR02-04: ô mật khẩu là `type="text"`, hiện rõ chữ | Major | B02 | FR-22 |
+| BUG-FR02-05: thông báo khi bị khóa khác thông báo sai mật khẩu | Major, cần xác nhận | B04 | FR-02 "không lộ nguyên nhân" |
+| BUG-FR02-06: phản hồi login trả mật khẩu thô | Critical | B05 | SEC-01 |
+
+Mỗi bug có bước tái hiện, kết quả mong đợi theo spec, kết quả thực tế và đối chiếu ID bug bên HW02. 11 test còn lại pass ở cả 3 browser. Các điểm spec im lặng (email hoa/thường, khoảng trắng, độ dài, bộ đếm sau hết khóa) được ghi riêng là "không báo bug".
+
+**Ảnh bằng chứng:** `scripts/capture-bug-evidence.mjs` gọi lại SUT thật, rồi sinh `docs/evidence/bugs/BUG-FR02-01…06.png`. Tôi đã xem 3 ảnh và dữ liệu đúng: bộ đếm 2 rồi 4, khóa còn khoảng 180 giây, `type="text"`. Hai ảnh UI có dải chú thích màu vàng do script thêm vào, hiển thị `outerHTML` thật của ô nhập. Báo cáo có ghi rõ điều này.
+
+**Cần bạn xác nhận**
+- **BUG-FR02-05:** bạn đã duyệt cách hiểu cho UI, còn phần so sánh thông báo của API là tôi đề xuất thêm.
+- **Mức độ nghiêm trọng:** các mức Major/Critical là đề xuất của tôi.
+- **Tạo GitHub Issues:** đề yêu cầu có Issue kèm ảnh. Việc này đăng công khai lên repo của bạn, và để nhúng ảnh được thì phải push repo trước. Bạn cho phép push và tạo 6 Issue không? Nếu đồng ý, tôi push rồi dùng `gh issue create` với ảnh lấy từ repo.
+
+Dòng audit #13 đã thêm (INCOMPLETE). Thống kê giờ là 13 artifact: 1 VALID, 6 INCOMPLETE, 6 PENDING. Số thứ tự trong dòng audit #12 và #13 đã được sửa lại cho khớp với prompt-log.
+````
+
+---
+
+### #16 — 2026-11-14 02:49 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+thực hiện push và tạo issues trên repo https://github.com/tkob-team/eshop-sut (đặt lại tên cho hợp lý và tránh trùng với các issues đang có, nếu trùng thì cũng tạo mới vì đây là bài tập homework riêng)
+````
+- **Output (verbatim, text only):**
+````text
+Mảng title trong zsh đánh số từ 1 nên các title bị lệch một vị trí so với nội dung. Tôi sửa lại title của 5 issue vừa tạo, rồi tạo issue còn thiếu (bug 1).
 ````
 
 ---
