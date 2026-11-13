@@ -87,6 +87,13 @@ def main():
     turns = []
     for f in sorted(glob.glob(os.path.join(PROJ, "*.jsonl")), key=os.path.getmtime):
         turns += load(f)
+    # a resumed session replays earlier turns into a new transcript: keep one copy (the fuller one)
+    best = {}
+    for t in turns:
+        k = (t["time"].strftime("%Y-%m-%d %H:%M"), t["prompt"][:200])
+        if k not in best or len("".join(t["out"])) > len("".join(best[k]["out"])):
+            best[k] = t
+    turns = list(best.values())
     turns = [t for t in turns if t["out"] or t["files"]]  # drop local slash commands (/chrome...) with no AI output
     turns.sort(key=lambda t: t["time"])
     out = [HEADER]

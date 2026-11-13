@@ -41,40 +41,7 @@ Bạn cho tôi biết 3 feature đã chọn ở HW02 thì tôi sẽ điền sẵ
 
 ---
 
-### #2 — 2026-11-13 19:26 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-Đọc @"2026.HW04.Automation Testing_En.pdf" và thực hiện setup folder sẵn cho bài tập lần này, đảm bảo đơn giản, đầy đủ nội dung
-````
-- **Output (verbatim, text only):**
-````text
-Folder đã được setup xong (chưa chạy `npm install` hay chạy thử test). Tôi cũng đã chuyển file PDF đề vào `docs/HW04-assignment.pdf`.
-
-**Cấu trúc**
-- `tests/featureA|B|C.spec.ts`: khung test data-driven cho 3 feature (mỗi pool A, B, C một feature). Mỗi file có sẵn ví dụ các kiểu assertion (URL, text, visible, count).
-- `data/featureA|B|C.csv`: dữ liệu test tách riêng khỏi script. Hiện chỉ có 3 dòng TODO mỗi file, cần mở rộng lên ≥ 12 case.
-- `utils/data.ts`: hàm đọc CSV/JSON.
-- `playwright.config.ts`: chạy 3 trình duyệt (chromium, firefox, webkit). Báo cáo HTML có tiêu đề `Run by: {STUDENT_ID} | <ISO timestamp>`.
-- `scripts/run-all.sh`: chạy lần lượt 3 browser, mỗi browser ra một báo cáo riêng ở `reports/<browser>/`. Lệnh: `npm run test:all`.
-- `scripts/gen-commit-log.sh`: xuất git log ra `docs/git-commit-log.txt`. Lệnh: `npm run commit-log`.
-- `README.md`: bảng tự chấm điểm, bảng tổng kết test, hướng dẫn chạy.
-- `docs/`: `report.md` (có phần phân tích lỗi AI), `ai-audit-report.md`, `ai-critique.md`, `bug-report.md`, `CHECKLIST.md` (checklist nộp bài kèm quy tắc đặt tên zip), thư mục `evidence/` cho screenshot.
-- `skill/SKILL.md`: Agent Skill mẫu.
-- `.env.example`: cần copy thành `.env`, đặt `STUDENT_ID` và `BASE_URL` (SUT chạy local).
-
-**Việc bạn cần làm tiếp**
-1. Chạy `cp .env.example .env` rồi điền MSSV.
-2. Chọn 3 feature giống HW02 (hoặc ghi lý do nếu chưa làm HW02). Hiện các file đang để placeholder `Feature A/B/C` và `FR-xx`.
-3. Chạy `git init`. Cần ≥ 8 commit có sửa file `.spec.ts`, nên hãy commit nhỏ và đều.
-4. Chạy `npm install && npm run install:browsers`, clone và chạy SUT từ https://github.com/ttbhanh/eshop-sut.
-
-Bạn cho tôi biết 3 feature đã chọn ở HW02 thì tôi sẽ điền sẵn test case và khung spec cho từng feature.
-````
-
----
-
-### #3 — 2026-11-13 19:34 (ICT)
+### #2 — 2026-11-13 19:34 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -109,42 +76,7 @@ Bước tiếp theo: tôi có thể viết ≥ 12 test case cho từng feature (
 
 ---
 
-### #4 — 2026-11-13 19:34 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-Thực hiện cho tôi các task sau: 
-1. Chạy cp .env.example .env
-2. MSSV: 23120264 - Tên: Nguyễn Phúc Hoàng
-3. Feature tôi chọn là: FR-02 (Login và khóa tài khoản), FR-08 (Checkout), FR-16 (Import sản phẩm từ CSV) và FR-20 Mobile — Thanh toán (không coupon).
-4. Tạo repo tên hw04-automation-testing bằng lệnh gh.
-5. SUT đang ở /Users/nphoang/Developer/hcmus/software-testing/eshop-sut-fithcmus, các ầnn sau cần chạy thì hãy qua đó chạy
-````
-- **Output (verbatim, text only):**
-````text
-Cài xong SUT. Giờ khởi chạy 3 server nền, đồng thời đổi tên/cập nhật file test theo 3 feature.
-
-Cả 3 server đang chạy. Giờ tạo git repo và repo GitHub.
-
-Cả 5 việc đã xong. Tôi chưa chạy `npm install` hay `playwright install` cho project HW04, nên chưa chạy thử test.
-
-1. **`.env`**: đã tạo từ `.env.example` và đặt `STUDENT_ID=23120264`. `.env.example` giờ trỏ tới SUT: web `:5173`, admin `:5174`, API `:3000`, kèm tài khoản mặc định admin và test user.
-2. **Thông tin cá nhân**: đã điền MSSV và tên vào `README.md`.
-3. **Feature**: file test và CSV đã đổi tên theo feature, nhưng bên trong vẫn là khung TODO với 3 dòng mẫu mỗi file.
-   - `fr02-login-lockout`: FR-02, Pool A, chạy trên web `:5173`.
-   - `fr08-checkout`: FR-08, Pool B, chạy trên web `:5173`.
-   - `fr16-import-csv`: FR-16, Pool C, chạy trên admin `:5174`.
-4. **Repo GitHub**: đã tạo public repo https://github.com/nphoang-itus/hw04-automation-testing và push commit đầu (`main`). Mới có 1 commit và chưa commit nào sửa file `.spec.ts`. Cần ≥ 8 commit sửa file test, nên hãy commit nhỏ và đều.
-5. **SUT**: đã `npm install` cho backend, frontend-web và frontend-admin, chạy `node database.js` để seed, rồi khởi chạy 3 server nền. Cả 3 đều trả HTTP 200. Log nằm ở `/tmp/eshop-{backend,web,admin}.log`.
-
-**Về FR-20 (Mobile checkout)**: tôi không đưa vào, vì đề HW04 chỉ tự động hóa web frontend và ghi rõ Pool D không dùng trong bài này. Tôi chỉ ghi chú trong `docs/report.md` rằng HW02 có chọn FR-20. Nếu thầy cô cho phép làm mobile thì báo tôi để đổi hướng.
-
-Bước tiếp theo: tôi có thể viết ≥ 12 test case cho từng feature (CSV và spec), dựa trên đặc tả trong README của SUT. Bạn muốn làm tiếp luôn không?
-````
-
----
-
-### #5 — 2026-11-13 19:39 (ICT)
+### #3 — 2026-11-13 19:39 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -175,38 +107,7 @@ Muốn bắt đầu viết test case và dữ liệu cho FR-02 thì bạn gửi 
 
 ---
 
-### #6 — 2026-11-13 19:39 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-Bổ sung ai-audit cho tôi nãy giờ, đảm bảo bây giờ mỗi lần tôi prompt (trừ những lần làm nhữung công việc vặt mà tôi có báo thì khỏi thêm ai-audit) thì hãy ghi đầy đủ nội dung ai-audit cho tôi (tham khảo template của HW02 ở /Users/nphoang/Developer/hcmus/software-testing/HW02-Domain-Testing để lấy mẫu và thực hiện điền các phần)
-````
-- **Output (verbatim, text only):**
-````text
-Đang đọc script trích log AI của HW02 để tái dùng cho HW04, rồi sẽ tạo `prompt-log`, `ai-audit-report` và quy tắc tự ghi mỗi lượt.
-
-Đã bổ sung AI audit cho các lượt từ đầu phiên đến giờ. Tôi cũng đặt quy tắc để các lượt sau tự ghi. Đã commit và push (`7d163fa`).
-
-**Các file mới**
-- `docs/ai-audit-report.md`: theo mẫu AI-02 của HW02. Gồm thông tin sinh viên, bảng audit 5 cột, thống kê độ chính xác, mục kết luận, tuyên bố disclosure, chữ ký và checklist Privacy. Bảng hiện có 3 dòng:
-  - Lượt 1 (setup folder): INCOMPLETE.
-  - Lượt 2 (`.env`, repo, SUT): INCOMPLETE.
-  - Lượt 3 (lượt này): PENDING.
-- `docs/ai/prompt-log.md`: prompt và output nguyên văn kèm giờ thật, do `scripts/ailog.py` trích tự động từ transcript của Claude Code. Lệnh `/chrome` không có output AI nên đã bị loại.
-- `docs/ai/chore-turns.md`: nơi ghi các lượt việc vặt không audit.
-- `CLAUDE.md`: quy tắc bắt buộc. Sau mỗi prompt tôi sẽ chạy `ailog.py`, thêm 1 dòng vào bảng audit, cập nhật thống kê và commit.
-
-**Một số điểm cần lưu ý**
-- **Việc vặt:** hãy bắt đầu prompt bằng `[chore]`. Script sẽ bỏ qua lượt đó và tôi không thêm dòng audit. Nếu bạn chỉ nói bằng lời, tôi chỉ ghi vào `chore-turns.md`.
-- **Verdict:** tôi chỉ ghi những gì đã kiểm chứng thật. Phần bạn tự review hoặc sửa đang để "Pending". Các mục kết luận, disclosure, chữ ký và AI Critique để bạn tự viết.
-- **Lượt hiện tại:** prompt-log chỉ có đầy đủ output của lượt này sau lần chạy script tiếp theo, vì câu trả lời cuối được viết sau khi script chạy. Dòng audit lượt này đã ghi nhận hạn chế đó.
-
-Muốn bắt đầu viết test case và dữ liệu cho FR-02 thì bạn gửi prompt tiếp, tôi sẽ làm từng bước và tự ghi audit.
-````
-
----
-
-### #7 — 2026-11-13 21:45 (ICT)
+### #4 — 2026-11-13 21:45 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -255,56 +156,7 @@ Bạn xem `plan-FR02.md` mục 4 (21 test case) và mục 8 (rủi ro). Nếu đ
 
 ---
 
-### #8 — 2026-11-13 21:45 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-bây giờ hãy bắt đầu với task đầu tiên là Task 1: Script automation do AI sinh. hãy bắt đầu với feature FR02. Trước tiên hãy lên plan cho task này, với kỹ thuật được trích xuất từ bài giảng trong đường dẫn: '/Users/nphoang/Library/CloudStorage/GoogleDrive-nphuchoang.itus@gmail.com/.shortcut-targets-by-id/16h7U2cdbwjxFCW7AxqlC-9wVjBHXrpBm/CSC13003-CQ-Software Testing-CT4-VN/Slides' (lọc các kiến thức có liên quan và tổng hợp vào 1 file duy nhất)
-````
-- **Output (verbatim, text only):**
-````text
-Đang đọc code đăng nhập của SUT (locator, logic khóa) để lập plan FR-02 sát thực tế.
-
-Plan FR-02 và file kỹ thuật từ slide đã xong, đã commit và push (`28dfad0`). Tôi chưa viết code test nào. Phát hiện chính khi đọc code SUT là phần "giả thuyết" bên dưới.
-
-**Hai file mới**
-- `docs/techniques-from-slides.md`: gom từ 3 slide (Automation & Regression AI-First, S12, Test Cases AI-First), mỗi ý có số trang. Gồm:
-  - chọn test nào để automate;
-  - cấu trúc 3A (Arrange–Act–Assert);
-  - data-driven + Page Object Model;
-  - locator và assertion ổn định, chống flaky;
-  - multi-browser;
-  - mẫu prompt AI-first và 4 kiểu AI hay sai;
-  - nguyên nhân automation thất bại.
-- `docs/plan-FR02.md`: plan cho FR-02, gồm:
-  - 21 test case (14 luồng đăng nhập trong CSV, 7 kiểm tra cấu trúc trong JSON), kỳ vọng lấy theo spec;
-  - 7 bước làm với AI, từ P1 đến P7;
-  - lịch 8 commit có sửa file test;
-  - tiêu chí hoàn thành và danh sách test không automate.
-
-**Giả thuyết từ đọc code SUT (chưa phải bug, chờ chạy test xác nhận)**
-- Bộ đếm sai tăng 2 thay vì 1, khóa 180 giây thay vì 30 giây.
-- Ô email và ô mật khẩu đều là `type="text"`.
-- Phản hồi đăng nhập trả cả mật khẩu thô.
-- Thông báo khóa khác thông báo sai thông tin (403 và 401), nên lộ trạng thái tài khoản.
-- Tiêu đề trang ghi "Đăng Ký".
-
-Các lỗi này khớp với bug của HW02, nên HW04 dùng làm regression suite.
-
-**Quyết định thiết kế**
-- Mỗi test tự tạo tài khoản riêng qua `/api/register`, dùng email có tên browser, rồi xóa ở teardown.
-- Đọc `login_attempts` qua `/api/admin/users` để kiểm bộ đếm.
-- Không dùng `getByLabel`, vì `<label>` trong `Login.jsx` không gắn với ô nhập.
-- Chờ hết khóa bằng `toPass` có timeout, không dùng sleep cố định.
-
-Tôi chưa đọc lại slide S04 (Domain Testing) và S06.1 (State Transition), mà dùng lại phân tích EP/BVA FR-02 của chính bạn từ HW02. Số trang trích từ footer PDF, bạn nên đối chiếu lại.
-
-Bạn xem `plan-FR02.md` mục 4 (21 test case) và mục 8 (rủi ro). Nếu đồng ý, tôi bắt đầu bước P1–P2 của AI-first.
-````
-
----
-
-### #9 — 2026-11-14 01:49 (ICT)
+### #5 — 2026-11-14 01:49 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -344,47 +196,7 @@ Bước tiếp theo là P2: danh sách test case dạng bảng theo mẫu ROLE/C
 
 ---
 
-### #10 — 2026-11-14 01:49 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-Đọc FR-02 và Login.jsx, liệt kê locator khả dụng, trạng thái ẩn, rủi ro flaky
-````
-- **Output (verbatim, text only):**
-````text
-Đã xong bước P1, kết quả lưu ở `docs/fr02-p1-analysis.md` (đã commit và push, `72edd0c`). Tôi mới đọc code, chưa mở trang `/login` thật để kiểm tra locator.
-
-**Locator khả dụng**
-- Không dùng được `getByLabel`, vì `<label>` không có `for`, không bọc ô nhập. Hai ô nhập không có `id`, `name` hay `data-testid`.
-- Ô email: `form input` thứ 0. Ô mật khẩu: `form input` thứ 1. Cả hai đều `type="text"`.
-- Nút gửi: `getByRole('button', { name: 'Sign In' })`.
-- Thông báo lỗi: `div.bg-red-100`. Không có `role="alert"`, và chỉ có một chuỗi chung "Đăng nhập thất bại…", nên UI không phân biệt được lỗi sai thông tin với lỗi bị khóa.
-- Đã đăng nhập: nút "Thoát" và dòng `Chào, <tên>`. Token nằm ở `localStorage['token']`.
-- Trang dùng `<h2>` "Đăng Ký" và không có `<h1>`.
-
-**Trạng thái ẩn**
-- `login_attempts` và `locked_until` nằm trong DB, xem được qua `GET /api/admin/users` bằng JWT admin.
-- Bị khóa trả 403, sai thông tin trả 401. Chỉ thấy qua API, UI gộp chung.
-- Bộ đếm không reset khi hết khóa, chỉ reset khi đăng nhập đúng.
-- `login` và `/api/users/me` trả cả mật khẩu thô.
-
-**Rủi ro flaky:** có 11 rủi ro (F1–F11) kèm đối sách, các rủi ro chính:
-- Bộ đếm khóa là state dùng chung, nên mỗi test cần tài khoản riêng (tạo qua `POST /api/register`, xóa bằng `DELETE /api/admin/users/:id`).
-- Chạy song song 3 browser nên email phải khác nhau theo browser.
-- Chờ hết khóa phải dùng `toPass` hoặc `expect.poll`, không dùng sleep cố định.
-- Hộp thoại báo lỗi `required` khác nhau giữa các browser, nên kiểm `validity.valueMissing` thay vì đọc text.
-- Server tính thời gian riêng, `page.clock` không điều khiển được.
-
-Tôi cũng liệt kê trong file các lỗi AI dễ mắc ở bước sau (dùng `getByLabel`, `role="alert"`, `input[type=email]`, kỳ vọng khóa 30 s thật) để đối chiếu khi review.
-
-Dòng audit #5 đã thêm (verdict PENDING), thống kê cập nhật thành 5 artifact. Mục #5 trong `prompt-log.md` sẽ xuất hiện ở lần chạy `ailog.py` kế tiếp, vì câu trả lời cuối của lượt này viết sau khi script chạy.
-
-Bước tiếp theo là P2: danh sách test case dạng bảng theo mẫu ROLE/CONTEXT/TASK/FORMAT, kèm đối chiếu kỳ vọng với spec. Bạn muốn tôi làm luôn không?
-````
-
----
-
-### #11 — 2026-11-14 01:52 (ICT)
+### #6 — 2026-11-14 01:52 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -411,34 +223,7 @@ Tôi đã thêm dòng audit #6 (verdict PENDING, thống kê 6 artifact). Mục 
 
 ---
 
-### #12 — 2026-11-14 01:52 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-lập danh sách test case dạng bảng theo mẫu ROLE/CONTEXT/TASK/FORMAT, kèm đối chiếu kỳ vọng với spec
-````
-- **Output (verbatim, text only):**
-````text
-Xong bước P2. Bảng test case nằm ở `docs/fr02-p2-testcases.md`, đã commit và push (`5675f3a`). Tôi chưa chạy test nào.
-
-**Nội dung file**
-- Prompt viết lại theo mẫu ROLE/CONTEXT/TASK/FORMAT/CONSTRAINTS.
-- 21 test case, mỗi case có tiêu đề dạng Action + Function + Condition, bước, dữ liệu, kết quả mong đợi và dòng spec tương ứng:
-  - Nhóm A (A01–A14): luồng đăng nhập, gồm positive, negative, biên 2/3/4 lần sai, hết khóa sau 30 giây và 2 case chuỗi 10.000 ký tự.
-  - Nhóm B (B01–B07): `type` của hai ô nhập, bộ đếm tăng đúng 1, thông báo khóa, phản hồi login không lộ `password`, token dùng được với Bearer, tiêu đề trang.
-- Mỗi kỳ vọng gắn nhãn độ tin cậy: **S** (trích thẳng spec), **D** (suy ra hợp lý) hoặc **A** (giả định). Có thêm bảng đối chiếu kỳ vọng với spec và bảng dự đoán kết quả. Bảng dự đoán chỉ để so sánh sau khi chạy, không dùng để viết kỳ vọng.
-
-**Ba điểm cần bạn quyết trước khi sang P3**
-1. **B04 (thông báo khi bị khóa):** spec vừa yêu cầu "thông báo phù hợp" vừa yêu cầu "không lộ nguyên nhân". Tôi hiểu là UI phải hiện lỗi giống hệt lúc sai mật khẩu. Bạn xác nhận cách hiểu này nhé.
-2. **A13, A14, B07:** tôi gắn nhãn **A** cho A13/A14 vì spec không nêu giới hạn độ dài. B07 thực ra thuộc FR-21, không phải FR-02. Bạn muốn giữ hay bỏ?
-3. **Email hoa/thường, khoảng trắng đầu/cuối và bộ đếm sau khi hết khóa:** spec im lặng nên tôi không tạo test case. Bạn đồng ý để ghi là spec gap trong báo cáo không?
-
-Tôi đã thêm dòng audit #6 (verdict PENDING, thống kê 6 artifact). Mục #6 trong `prompt-log.md` sẽ xuất hiện sau lần chạy `ailog.py` kế tiếp. Bạn trả lời ba câu trên thì tôi làm P3 (file dữ liệu CSV/JSON).
-````
-
----
-
-### #13 — 2026-11-14 01:56 (ICT)
+### #7 — 2026-11-14 01:56 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -470,39 +255,7 @@ Tiếp theo là P4: `pages/LoginPage.ts` và `utils/api.ts`, gồm tạo/xóa t�
 
 ---
 
-### #14 — 2026-11-14 01:56 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-1. ok tôi đồng ý
-2. bỏ đi, chỉ làm những thứ liên quan tới FR đã chọn
-3. ok, cứ theo spec mà làm
-````
-- **Output (verbatim, text only):**
-````text
-Đã ghi lại quyết định của bạn và làm xong bước P3 (dữ liệu CSV/JSON cho FR-02). Đã commit và push (`7fe396f`).
-
-**Quyết định áp dụng**
-1. B04: UI khi bị khóa hiển thị lỗi giống khi sai mật khẩu, không nêu "khóa".
-2. Bỏ A13, A14 và B07, còn **18 test case** (A01–A12, B01–B06). Tôi hiểu "bỏ đi" của bạn là bỏ cả ba case đó, vì câu hỏi của tôi liệt kê cả ba. Nếu bạn muốn giữ A13/A14 thì báo tôi, thêm lại rất nhanh.
-3. Email hoa/thường, khoảng trắng và bộ đếm sau hết khóa: không tạo test case, ghi là spec gap.
-
-Quyết định đã ghi vào `docs/fr02-p2-testcases.md` (mục 7) và `docs/plan-FR02.md`.
-
-**File dữ liệu**
-- `data/fr02-login-lockout.csv`: 12 dòng A01–A12. Các cột chính: `wrong_attempts`, `email_kind`, `password_kind`, `wait_after_lock_s`, `expected_outcome` (`logged_in`, `rejected` hoặc `blocked_client`), `expected_text`, `spec_ref`, `hw02_ref`.
-- `data/fr02-checks.json`: 6 kiểm tra B01–B06. Các loại check: `attribute`, `attempts_after_wrong`, `message_equal`, `api_body_lacks`, `token_bearer`.
-- File chỉ ghi loại dữ liệu (`valid`/`wrong`/`unregistered`…), không ghi email hay mật khẩu cụ thể. Phần tạo tài khoản sẽ do POM và helper ở P4 lo.
-- Kỳ vọng lấy từ spec, không lấy từ hành vi hiện tại của SUT. `hw02_ref` chỉ điền ở những dòng tôi biết chắc ID bên HW02.
-
-Tôi mới kiểm file bằng Python (12 dòng, 6 check, đúng số cột), chưa nạp bằng helper Playwright. Dòng audit #7 đã thêm (PENDING), thống kê giờ là 7 artifact.
-
-Tiếp theo là P4: `pages/LoginPage.ts` và `utils/api.ts`, gồm tạo/xóa tài khoản test và đọc `login_attempts` qua admin API. Bạn muốn tôi làm luôn không?
-````
-
----
-
-### #15 — 2026-11-14 02:03 (ICT)
+### #8 — 2026-11-14 02:03 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -515,20 +268,7 @@ No response requested.
 
 ---
 
-### #16 — 2026-11-14 02:03 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-Thực hiện implement pages/LoginPage.ts và utils/api.ts, gồm tạo/xóa tài khoản test và đọc login_attempts qua admin API
-````
-- **Output (verbatim, text only):**
-````text
-No response requested.
-````
-
----
-
-### #17 — 2026-11-14 02:04 (ICT)
+### #9 — 2026-11-14 02:04 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -571,50 +311,7 @@ Tiếp theo là P5: viết spec data-driven cho FR-02 để AI sinh bản nháp 
 
 ---
 
-### #18 — 2026-11-14 02:04 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-keep going
-````
-- **Output (verbatim, text only):**
-````text
-Chromium đã cài xong. Giờ chạy smoke test tạm để kiểm helper và locator trên SUT thật.
-
-Xong bước P4, đã commit local (`6c79c0d`). Tôi chưa push, vì `CLAUDE.md` ghi "không push nếu chưa được yêu cầu".
-
-Tôi đã sai khi push ở các lượt trước, và hai lần commit gần nhất bị chặn cũng vì lý do này. Các commit trước đó đã lên GitHub rồi, còn `6c79c0d` mới chỉ ở máy bạn. Bạn bảo tôi push thì tôi push.
-
-**Hai file mới**
-- `pages/LoginPage.ts`:
-  - Hai ô nhập được định vị theo thứ tự trong form, vì `<label>` không gắn với input.
-  - `submitAndWait()` đợi đúng response của `/api/login`, nên nhiều lần sai liên tiếp không bị race.
-  - `validity()` đọc trạng thái HTML5 từ DOM, không đọc bong bóng báo lỗi của trình duyệt.
-  - Có sẵn `expectLoggedIn()` và `expectRejected()`.
-- `utils/api.ts`:
-  - `createTestAccount` tạo tài khoản mới với email riêng cho từng test và từng browser.
-  - `deleteTestAccount` xóa tài khoản qua admin API.
-  - `getAccountState` đọc `login_attempts` và `locked_until` qua `GET /api/admin/users`.
-  - `loginApi` và `getMe` để gọi API trực tiếp.
-
-Tôi đã thêm `pages` vào `tsconfig.json`, và `tsc --noEmit` không báo lỗi.
-
-**Đã kiểm trên SUT thật**
-Một smoke test tạm chạy trên Chromium: tạo tài khoản, đăng nhập sai rồi đúng, đọc trạng thái, xóa tài khoản, kết quả pass. Ghi chú: `tests/_smoke.spec.ts` vẫn còn ở máy dưới dạng file untracked, chưa commit. Lệnh `rm` bị hệ thống chặn nên tôi giữ lại. Bạn xóa tay giúp, hoặc cho phép thì tôi xóa.
-
-Quan sát từ smoke test (chưa phải kết quả chính thức):
-- Hai ô nhập đều `type=text`.
-- Sau 1 lần sai, `login_attempts` là 2 (spec yêu cầu 1).
-- `/api/users/me` trả cả `password`.
-
-Các điểm này khớp giả thuyết H1, H3, H4, H5, cần các test chính thức xác nhận. Firefox và WebKit chưa kiểm, vì lệnh cài Chromium trước đó bị kill (exit 137) và tôi đã cài lại riêng. Dòng audit #8 đã thêm (INCOMPLETE), thống kê giờ là 8 artifact.
-
-Tiếp theo là P5: viết spec data-driven cho FR-02 để AI sinh bản nháp nguyên bản và commit ngay trước khi sửa. Bạn muốn làm luôn không?
-````
-
----
-
-### #19 — 2026-11-14 02:07 (ICT)
+### #10 — 2026-11-14 02:07 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -647,40 +344,7 @@ Dòng audit #9 đã thêm (PENDING), thống kê giờ là 9 artifact. Bạn mu�
 
 ---
 
-### #20 — 2026-11-14 02:07 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-viết spec data-driven cho FR-02 để AI sinh bản nháp nguyên bản và commit ngay trước khi sửa
-````
-- **Output (verbatim, text only):**
-````text
-Bản nháp spec FR-02 đã được commit nguyên bản, chưa sửa gì: `68dd2e5` "AI-generated draft spec (unreviewed)", chỉ commit local. Tôi chưa chạy test, nên chưa biết lỗi nào là bug của SUT, lỗi nào là lỗi của script.
-
-**Hai file spec**
-- `tests/fr02-login-lockout.spec.ts`:
-  - Đọc 12 dòng CSV (A01–A12) bằng `loadData`, mỗi dòng là một test.
-  - `emailFor` và `passwordFor` chuyển loại dữ liệu (`valid`, `wrong`, `empty`, `malformed`, `sqli`, `unregistered`) thành giá trị thật.
-  - Ba kiểu kết quả: `logged_in`, `rejected`, `blocked_client`.
-  - A12 dùng `toPass` thử lại, tối đa 35 giây, không dùng sleep.
-  - Mỗi test tạo tài khoản riêng và xóa trong `finally`.
-- `tests/fr02-checks.spec.ts`: đọc 6 check từ JSON (B01–B06), rẽ nhánh theo loại check.
-
-`tsc --noEmit` không lỗi, và `playwright test --list` liệt kê đủ **18 test**. Các kiểu assertion dùng trong bản nháp: URL, hiển thị, text, token có giá trị, mã HTTP, validity HTML5, số request, thuộc tính, trạng thái đọc qua admin API.
-
-**Vài điểm yếu đã thấy (chưa sửa, để B7)**
-- B04 chỉ so sánh text trên UI. Trang chỉ có một chuỗi lỗi cố định nên test này có thể pass một cách vô nghĩa.
-- Nhánh `blocked_client` chọn ô cần kiểm dựa vào `email_kind`, hơi vụng.
-- A12 thử đăng nhập lặp lại trong lúc còn bị khóa.
-
-Trong repo có hai thứ lẻ chưa commit: `tests/_smoke.spec.ts` (file smoke test tạm) và thư mục `reports/all/`. File smoke sẽ bị chạy chung với suite nếu bạn chạy `npm run test:all`. Bạn xóa tay giúp, hoặc cho phép thì tôi xóa.
-
-Dòng audit #9 đã thêm (PENDING), thống kê giờ là 9 artifact. Bạn muốn sang P6 (hỏi lại AI "còn thiếu input hay biên nào?") hay chạy thử Chromium trước (P7)? Tôi đề xuất chạy trước, để phân biệt lỗi script và bug SUT có bằng chứng thật.
-````
-
----
-
-### #21 — 2026-11-14 02:14 (ICT)
+### #11 — 2026-11-14 02:14 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -722,49 +386,7 @@ Tôi đề xuất làm 1 trước.
 
 ---
 
-### #22 — 2026-11-14 02:14 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-Chạy trước đi để phân biệt lỗi script và bug SUT
-````
-- **Output (verbatim, text only):**
-````text
-Đã chạy bản nháp trên Chromium, kết quả thật là **18 test: 11 pass, 7 fail** (44,3 giây). Cả 7 test fail đều do SUT sai spec, không có test nào fail vì lỗi script. Phân tích nằm ở `docs/fr02-p7-first-run.md`, log gốc ở `docs/evidence/fr02-draft-chromium-run1.txt`. Đã commit local (`605e57c`), chưa push.
-
-**7 test fail, đều là bug SUT**
-
-| Test | Bug | Bằng chứng |
-|---|---|---|
-| B01, A08 | Ô email là `type="text"`, không chặn email thiếu `@` | locator đúng (A01 và A06/A07 đều pass) |
-| B02 | Ô mật khẩu là `type="text"` | như trên |
-| B03 | 1 lần sai làm `login_attempts` = 2 (spec yêu cầu 1) | đọc qua admin API |
-| A03 | Sau 2 lần sai, đăng nhập đúng vẫn bị từ chối (hệ quả của bộ đếm +2) | lần sai thứ 3 trả 403 |
-| B05 | `user.password` trả mật khẩu thô trong response login | |
-| A12 | 403 liên tục suốt 35 giây | đo trực tiếp qua API: sau khi khóa, `locked_until` còn 180 giây |
-
-Tôi đã tạo một tài khoản probe để đo, rồi xóa ngay sau đó.
-
-**Các test pass nhưng assertion còn yếu**
-- **B04** luôn pass: UI chỉ có một chuỗi lỗi cố định, nên test này không bắt được việc API trả 403 khác 401.
-- **A10 và A11** không chứng minh được ngưỡng đúng là 3: tài khoản đã bị khóa từ lần sai thứ 2 do lỗi bộ đếm.
-- **A12** dùng polling mỗi giây khi đang bị khóa. Cách này mong manh, nên đổi thành poll `locked_until` qua admin API rồi đăng nhập một lần.
-
-**Chưa hoàn tất**
-- Mới chạy Chromium, chưa có report HTML chính thức nào. Firefox và WebKit chưa chạy (browser-run 0/3).
-- `tests/_smoke.spec.ts` vẫn nằm trong `tests/` dưới dạng file untracked. Bạn xóa giúp, hoặc cho phép thì tôi xóa.
-- Dòng audit #10 đã thêm (INCOMPLETE), thống kê giờ là 10 artifact.
-
-Bước tiếp theo, bạn chọn hướng nào?
-1. P6: hỏi lại AI "còn thiếu input hoặc biên nào?", rồi sửa B04, A10, A11, A12 và commit từng sửa riêng cho lịch commit.
-2. Cài Firefox và WebKit để chạy thử cả 3 browser trước khi sửa.
-
-Tôi đề xuất làm 1 trước.
-````
-
----
-
-### #23 — 2026-11-14 02:19 (ICT)
+### #12 — 2026-11-14 02:19 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
@@ -804,62 +426,7 @@ Tôi đề xuất bước tiếp theo là cài hai browser còn lại và chạy
 
 ---
 
-### #24 — 2026-11-14 02:19 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-làm hướng 1 đi
-````
-- **Output (verbatim, text only):**
-````text
-Xong P6: tôi đã sửa bản nháp FR-02 qua 5 commit riêng. Chạy lại trên Chromium cho kết quả **20 test: 11 pass, 9 fail**, và cả 9 lỗi đều do SUT sai spec, không có lỗi nào do script. Tôi chưa push.
-
-**5 commit sửa (sau bản nháp `68dd2e5`)**
-1. `aa5e27a`: trường cần kiểm và loại validity của A06–A08 đọc từ CSV, không còn suy từ `email_kind` trong code.
-2. `b5172c0`: A12 chờ theo thời gian đã trôi kể từ lúc khóa, rồi đăng nhập đúng một lần. Không còn thử lại liên tục khi đang bị khóa.
-3. `42815eb`: thêm cột `locked_after_wrong`, kiểm `locked_until` sau các lần sai. Nhờ đó A10 và A11 kiểm được trạng thái khóa thay vì chỉ kiểm kết quả đăng nhập (A02/A03 yêu cầu chưa khóa, A10–A12 yêu cầu đã khóa).
-4. `d948392`: B04 so thêm thông báo lỗi của API giữa "bị khóa" và "sai mật khẩu", vì UI chỉ có một chuỗi lỗi cố định.
-5. `19c2a56`: thêm **A13** (sai, sai, đúng, sai, sai thì không khóa vì chỉ tính lần sai liên tiếp) và **B07** (đăng nhập đúng thì đặt lại bộ đếm về 0).
-
-**9 test fail, gom theo 6 bug SUT**
-- Bộ đếm +2: A03, B03, A13.
-- Khóa 180 giây thay vì 30 giây: A12.
-- Ô email là `type="text"`: A08, B01.
-- Ô mật khẩu là `type="text"`: B02.
-- API khi khóa trả "Tài khoản đã bị khóa" khác thông báo sai mật khẩu: B04.
-- Phản hồi login trả mật khẩu thô: B05.
-
-**Cần bạn xác nhận**
-- **B04** giờ fail vì tôi mở rộng cách hiểu bạn đã duyệt (UI) sang cả thông báo của API. Bạn đồng ý với phần mở rộng này không?
-- **Commit nhầm file:** lệnh `git add tests` ở commit thứ hai đã đưa `_smoke.spec.ts` vào repo. Tôi đã gỡ bằng `fd44c67`. Chạy test dùng đường dẫn tường minh nên suite không bị ảnh hưởng.
-
-Bảng "AI thiếu/sai gì, vì sao" nằm ở `docs/fr02-p6-iteration.md`, đã ghi cả nguyên nhân thật. Ví dụ AI đã thấy điểm yếu của B04 từ P5 nhưng vẫn viết, và prompt P2 không có case EP-05 của HW02. Log chạy: `docs/evidence/fr02-fixed-chromium-run2.txt`. Dòng audit #11 đã thêm (INCOMPLETE), thống kê giờ là 11 artifact.
-
-**Việc còn lại cho FR-02**
-- Cài Firefox và WebKit, chạy cả 3 browser để có 3 report HTML chính thức (`Run by: 23120264`).
-- Viết bug report, tạo GitHub Issues kèm ảnh. Ảnh chụp từ test fail nằm ở thư mục kết quả tạm của lần chạy.
-
-Tôi đề xuất bước tiếp theo là cài hai browser còn lại và chạy `npm run test:all`. Bạn muốn làm luôn không?
-````
-
----
-
-### #25 — 2026-11-14 02:39 (ICT)
-- **Tool / model:** Claude Code · `claude-sonnet-5-5`
-- **Prompt (verbatim):**
-````text
-cài hai browser còn lại và chạy npm run test:all
-````
-- **Output (verbatim, text only):**
-````text
-Đã cài WebKit (Firefox có sẵn). Đang chạy FR-02 trên cả 3 browser, tôi sẽ báo khi xong.
-
-Lưu ý: tôi truyền đường dẫn spec FR-02 vào `npm run test:all` để không chạy các file khung của FR-08/FR-16, vì chúng chỉ có dữ liệu TODO và sẽ cho kết quả pass giả.
-````
-
----
-
-### #26 — 2026-11-14 02:39 (ICT)
+### #13 — 2026-11-14 02:39 (ICT)
 - **Tool / model:** Claude Code · `claude-sonnet-5-5`
 - **Prompt (verbatim):**
 ````text
