@@ -13,6 +13,8 @@ interface LoginCase {
   wait_after_lock_s: string;
   expected_outcome: 'logged_in' | 'rejected' | 'blocked_client';
   expected_text: string;
+  blocked_field: 'email' | 'password' | '';
+  expected_validity: 'valueMissing' | 'typeMismatch' | '';
 }
 
 const WRONG_PASSWORD = 'Wrong@1234';
@@ -62,10 +64,8 @@ test.describe('FR-02 Login & account lockout', () => {
           await login.fill(email, password);
           await login.submit();
 
-          const field = tc.email_kind === 'valid' ? 'password' : 'email';
-          const validity = await login.validity(field);
-          if (tc.email_kind === 'malformed') expect(validity.typeMismatch).toBe(true);
-          else expect(validity.valueMissing).toBe(true);
+          const validity = await login.validity(tc.blocked_field as 'email' | 'password');
+          expect(validity[tc.expected_validity as 'valueMissing' | 'typeMismatch']).toBe(true);
           expect(apiCalls).toBe(0);
           await expect(page).toHaveURL(/\/login$/);
         } else if (tc.expected_outcome === 'rejected') {
