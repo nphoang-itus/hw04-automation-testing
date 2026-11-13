@@ -57,6 +57,11 @@ test.describe('FR-02 Structure, state and security checks', () => {
               const lockedText = await login.errorBox.innerText();
               expect(lockedText).toBe(normalText);
               for (const word of c.must_not_contain!) expect(lockedText.toLowerCase()).not.toContain(word);
+
+              // the UI shows one constant string, so also compare what the API says in each case
+              const whileLocked = await loginApi(request, locked.email, locked.password);
+              const wrongPassword = await loginApi(request, acct.email, WRONG_PASSWORD);
+              expect(whileLocked.body.error).toBe(wrongPassword.body.error);
             } finally {
               await deleteTestAccount(request, locked.id);
             }
