@@ -735,3 +735,40 @@ Dòng audit #19 đã thêm (INCOMPLETE), thống kê giờ là 19 artifact. Bư�
 ````
 
 ---
+
+### #23 — 2026-11-14 16:14 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+làm P5 đi, viết spec nháp cho FR-08
+````
+- **Output (verbatim, text only):**
+````text
+Xong P5. Spec nháp FR-08 đã commit nguyên bản (`6efb6b9`, "AI-generated draft spec (unreviewed)"), chưa chạy và chưa push.
+
+**Hai file spec**
+- `tests/fr08-checkout.spec.ts` đọc 10 dòng CSV (A01–A10):
+  - Mỗi test tạo user riêng và đăng nhập bằng token tiêm vào `localStorage`.
+  - Cho trường hợp `order_created`: thêm hàng, mở trang thanh toán, nếu có `tamper_mode` thì sửa ô tổng, bấm xác nhận rồi kiểm status 200, tiêu đề thành công, và đơn trong `my-orders` có `total_amount` bằng tổng tính từ giá thật.
+  - Cho khách chưa đăng nhập (`no_order`): kiểm dialog và URL `/login` (A05), hoặc status lỗi và không có thông báo thành công (A06). Cả hai đều kiểm số đơn không có user không đổi.
+- `tests/fr08-checks.spec.ts` đọc 5 check JSON (B01–B05):
+  - B01: ô tổng tiền không sửa được.
+  - B02: danh sách dòng sản phẩm đầy đủ.
+  - B03: tổng hiển thị, tổng trong request và tổng đơn đã lưu khớp nhau.
+  - B04: giỏ hàng trống sau khi thanh toán thành công.
+  - B05: khách gọi API checkout bị từ chối.
+
+Tôi thêm `CheckoutPage.startAsUser` cho phần arrange dùng chung của hai spec. `tsc --noEmit` không lỗi, `playwright --list` liệt kê 15 test, `validate_feature.py fr08` báo OK (15 case, 6 kiểu assertion). Các bài học từ FR-02 đã được áp dụng ngay từ bản nháp, chạy thật ở P7 sẽ cho biết có đủ chưa.
+
+Điểm yếu tôi đã thấy nhưng chưa sửa, để dành cho P6:
+- A07–A10 gọi `setTotal` nhưng bỏ qua giá trị trả về. Nếu ô không sửa được, bước sửa tổng im lặng không làm gì.
+- A06 chỉ kiểm status ≥ 400.
+- Kiểm dialog bằng `expect.poll` phụ thuộc bộ ghi dialog.
+- Assertion `orders` có đúng 1 phần tử giả định mỗi tài khoản mới chỉ có một đơn.
+
+Trong repo còn hai thứ lẻ chưa commit: `tests/_smoke8.spec.ts` (file smoke test) và thư mục `reports/all/`. Bạn xóa tay giúp hai thứ này, hoặc cho phép thì tôi xóa.
+
+Dòng audit #20 đã thêm (PENDING), thống kê giờ là 20 artifact. Bước tiếp theo là P7: chạy thật trên Chromium để phân loại lỗi script, bug SUT, flaky và spec gap. Bạn muốn làm luôn không?
+````
+
+---
