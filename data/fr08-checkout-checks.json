@@ -58,5 +58,15 @@
     "client_total": 1,
     "spec_ref": "FR-08 backend recomputes total and ignores client total_amount",
     "hw02_ref": ""
+  },
+  {
+    "id": "FR08-B07",
+    "type": "state",
+    "title": "Verify displayed, sent and stored totals equal the computed total after the user tries to change the total",
+    "check": "totals_agree_after_tamper",
+    "items": "1:1",
+    "tamper_value": 1,
+    "spec_ref": "FR-08 total computed automatically and not editable",
+    "hw02_ref": ""
   }
 ]

@@ -72,6 +72,17 @@ test.describe('FR-08 Structure, state and security checks', () => {
             await expect(page.locator('tbody tr')).toHaveCount(0);
             break;
           }
+          case 'totals_agree_after_tamper': {
+            await checkout.startAsUser(token, items, 'home');
+            const tampered = await checkout.setTotal(c.tamper_value!);
+            if (!tampered) testInfo.annotations.push({ type: 'note', description: 'total input not editable; tamper step skipped' });
+            expect(await checkout.summaryTotal()).toBe(expectedTotal);
+            const attempt = await checkout.confirm();
+            expect(attempt.requestBody.total_amount).toBe(expectedTotal);
+            await expect(checkout.successHeading).toBeVisible();
+            expect((await getMyOrders(request, token))[0].total_amount).toBe(expectedTotal);
+            break;
+          }
           case 'api_total_recomputed': {
             // straight to the backend, so this stays valid even if the page stops allowing edits
             const lines = items.map((it) => ({ ...products[it.index], quantity: it.quantity }));
