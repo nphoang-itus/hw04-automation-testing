@@ -10,11 +10,14 @@ interface Check {
   id: string;
   type: string;
   title: string;
-  check: 'input_not_editable' | 'lines_listed' | 'totals_agree' | 'cart_empty_after_success' | 'api_guest_rejected';
+  check: 'input_not_editable' | 'lines_listed' | 'totals_agree' | 'cart_empty_after_success' | 'api_guest_rejected'
+    | 'api_total_recomputed' | 'totals_agree_after_tamper';
   items?: string;
   expected_lines?: number;
   expected_text?: string;
   expected_status_in?: number[];
+  client_total?: number;
+  tamper_value?: number;
 }
 
 const checks = loadData<Check>('fr08-checkout-checks.json');
@@ -67,6 +70,20 @@ test.describe('FR-08 Structure, state and security checks', () => {
             await checkout.goToCart();
             await expect(checkout.emptyCartMessage).toBeVisible();
             await expect(page.locator('tbody tr')).toHaveCount(0);
+            break;
+          }
+          case 'api_total_recomputed': {
+            // straight to the backend, so this stays valid even if the page stops allowing edits
+            const lines = items.map((it) => ({ ...products[it.index], quantity: it.quantity }));
+            const res = await checkoutApi(request, token, { items: lines, total_amount: c.client_total });
+            const orders = await getMyOrders(request, token);
+            if (res.status === 200) {
+              expect(orders).toHaveLength(1);
+              expect(orders[0].total_amount).toBe(expectedTotal);
+            } else {
+              expect(res.status).toBeLessThan(500); // rejecting the bogus total is also acceptable
+              expect(orders).toHaveLength(0);
+            }
             break;
           }
           case 'api_guest_rejected': {
