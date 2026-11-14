@@ -577,3 +577,49 @@ Bạn có muốn tôi bắt đầu FR-08 theo skill này không (chạy `new_fea
 ````
 
 ---
+
+### #18 — 2026-11-14 02:58 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+Bắt đầu FR-08 theo skill đi
+````
+- **Output (verbatim, text only):**
+````text
+Đã scaffold FR-08 bằng skill và làm xong bước P1. Theo skill, tôi dừng lại để bạn duyệt trước khi sang P2. Đã commit local (`694f171`), chưa push.
+
+**Scaffold:** chạy `new_feature.py fr08-checkout --force`. Lệnh này ghi đè khung TODO cũ của spec và CSV (cả hai vẫn còn trong lịch sử git) và tạo `pages/CheckoutPage.ts`, `data/fr08-checkout-checks.json`, 3 file mẫu trong `docs/fr08-checkout/`.
+
+**P1** nằm ở `docs/fr08-checkout/p1-analysis.md`, chỉ dựa trên đọc code, chưa chạy trên SUT thật.
+
+Phát hiện quan trọng để thiết kế test:
+- **Giỏ hàng chỉ nằm trong state của React.** `page.goto` hoặc reload sẽ làm trống giỏ, trong khi đăng nhập vẫn còn. Test phải đi bằng click link, không `goto` sau khi thêm hàng.
+- **Lỗi thanh toán chỉ hiện bằng `alert()`.** Phải bắt dialog, nếu không test pass nhầm mà không thấy thông báo.
+- **Locale:** `toLocaleString()` phụ thuộc locale của browser, nên cần đặt `locale: 'en-US'` cho cả 3 project.
+- **Không có `getByLabel`, `data-testid` hay `role="alert"`.** Ô tổng tiền định vị bằng `input[type="number"]`.
+- **Oracle trạng thái:** `GET /api/orders/my-orders` và `GET /api/admin/orders`. Bảng đơn hàng không lưu các dòng sản phẩm.
+- **Request gửi đi** có dạng `{items, total_amount, coupon_id}` và không có `shipping_address`.
+
+Giả thuyết từ code (H1–H9, chưa phải bug): ô tổng tiền sửa được; backend tin `total_amount` của client; giỏ không bị xóa sau khi thanh toán thành công; web không gửi địa chỉ giao hàng; không có chốt đăng nhập ở UI cho `/checkout`; tổng âm hoặc 0 vẫn được nhận. HW02 đã báo các lỗi liên quan, HW04 sẽ phát hiện lại nhưng kỳ vọng lấy lại từ spec.
+
+**Cần bạn xác nhận trước P2**
+1. **Phạm vi:** tôi loại coupon (FR-09, đúng như HW02) và các lỗi nhãn của giỏ hàng (FR-07, như "Tổng tạm tính") khỏi FR-08. Đồng ý không?
+2. **Spec im lặng:** giỏ trống khi thanh toán, địa chỉ giao hàng trên web, giới hạn số lượng. Tôi dự định ghi là spec gap và không tạo test case. Đồng ý không?
+
+Dòng audit #16 đã thêm (PENDING), thống kê là 16 artifact. Bạn trả lời hai câu trên thì tôi làm P2 (danh sách test case theo mẫu ROLE/CONTEXT/TASK/FORMAT).
+````
+
+---
+
+### #19 — 2026-11-14 03:04 (ICT)
+- **Tool / model:** Claude Code · `<synthetic>`
+- **Prompt (verbatim):**
+````text
+ok đồng ý cả hai, làm P2 đi
+````
+- **Output (verbatim, text only):**
+````text
+No response requested.
+````
+
+---
