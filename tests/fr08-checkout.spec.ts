@@ -78,6 +78,7 @@ test.describe('FR-08 Checkout (web)', () => {
           const attempt = await checkout.confirm();
           expect(attempt.status).toBeGreaterThanOrEqual(400);
           await expect(checkout.successHeading).toBeHidden();
+          await expect.poll(() => checkout.dialogs.length).toBeGreaterThan(0); // the user is told it failed (message is a spec gap)
         }
 
         if (tc.expected_outcome === 'no_order') {
