@@ -55,7 +55,11 @@ test.describe('FR-08 Checkout (web)', () => {
             const value = tc.tamper_mode === 'absolute'
               ? Number(tc.tamper_value)
               : expectedTotal * Number(tc.tamper_value);
-            await checkout.setTotal(value);
+            const tampered = await checkout.setTotal(value);
+            if (!tampered) {
+              // read-only input (spec-compliant): nothing to tamper with in the UI, backend is covered by FR08-B06
+              testInfo.annotations.push({ type: 'note', description: 'total input not editable; tamper step skipped' });
+            }
           }
 
           const attempt = await checkout.confirm();
