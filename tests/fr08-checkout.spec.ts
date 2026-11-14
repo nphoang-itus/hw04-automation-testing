@@ -1,35 +1,86 @@
 import { test, expect } from '@playwright/test';
 import { CheckoutPage } from '../pages/CheckoutPage';
+import {
+  createTestAccount, deleteTestAccount, getProducts, getToken, getMyOrders, countOrdersWithoutUser,
+} from '../utils/api';
+import { parseItems, computeTotal } from '../utils/cart';
 import { loadData } from '../utils/data';
-// import { createTestAccount, deleteTestAccount } from '../utils/api';
 
-interface Case {
+interface CheckoutCase {
   id: string;
   type: string;
   title: string;
-  expected_outcome: string;
-  spec_ref: string;
-  // TODO: one column per varying input / expected value in data/fr08-checkout.csv
+  login: 'user' | 'guest';
+  items: string;
+  add_via: 'home' | 'detail' | 'none';
+  entry: 'cart' | 'direct';
+  tamper_mode: 'none' | 'absolute' | 'multiplier';
+  tamper_value: string;
+  expected_outcome: 'order_created' | 'no_order';
+  expected_total: string;
+  expected_text: string;
 }
 
-const cases = loadData<Case>('fr08-checkout.csv');
+const cases = loadData<CheckoutCase>('fr08-checkout.csv');
 
-test.describe('FR-08 Checkout', () => {
+test.describe('FR-08 Checkout (web)', () => {
   for (const tc of cases) {
     test(`${tc.id} [${tc.type}] ${tc.title}`, async ({ page, request }, testInfo) => {
-      // Arrange: isolated data for this test and browser, e.g.
-      // const acct = await createTestAccount(request, `${testInfo.project.name}_${tc.id}`.toLowerCase());
+      const products = await getProducts(request);
+      const items = parseItems(tc.items);
+      const expectedTotal = computeTotal(items, products);
+      const account = tc.login === 'user'
+        ? await createTestAccount(request, `${testInfo.project.name}_${tc.id}`.toLowerCase())
+        : null;
+
       try {
-        const ui = new CheckoutPage(page);
-        await ui.goto();
+        const checkout = new CheckoutPage(page);
+        const guestOrdersBefore = await countOrdersWithoutUser(request);
+        const token = account ? await getToken(request, account) : null;
+        if (token) await checkout.loginWithToken(token);
 
-        // Act: one behaviour under test, using values from `tc`
+        if (tc.entry === 'direct') {
+          await page.goto('/checkout');
+        } else {
+          await checkout.openHome();
+          await checkout.fillCart(items, tc.add_via as 'home' | 'detail');
+          await checkout.goToCart();
+          await checkout.proceedToCheckout();
+        }
 
-        // Assert: expected result from the SPEC; use several kinds (URL, text, visibility,
-        // attribute, state via API, status code). Never wait with fixed sleeps.
-        expect(tc.expected_outcome).toBeTruthy(); // TODO replace
+        if (tc.expected_outcome === 'order_created') {
+          await expect(checkout.heading).toBeVisible();
+
+          if (tc.tamper_mode !== 'none') {
+            const value = tc.tamper_mode === 'absolute'
+              ? Number(tc.tamper_value)
+              : expectedTotal * Number(tc.tamper_value);
+            await checkout.setTotal(value);
+          }
+
+          const attempt = await checkout.confirm();
+          expect(attempt.status).toBe(200);
+          await expect(page.getByRole('heading', { name: tc.expected_text })).toBeVisible();
+
+          const orders = await getMyOrders(request, token!);
+          expect(orders).toHaveLength(1);
+          expect(orders[0].total_amount).toBe(expectedTotal);
+        } else if (tc.entry === 'cart') {
+          // guest stopped at the cart
+          await expect.poll(() => checkout.dialogs).toContain(tc.expected_text);
+          await expect(page).toHaveURL(/\/login$/);
+        } else {
+          // guest submits the checkout page directly
+          const attempt = await checkout.confirm();
+          expect(attempt.status).toBeGreaterThanOrEqual(400);
+          await expect(checkout.successHeading).toBeHidden();
+        }
+
+        if (tc.expected_outcome === 'no_order') {
+          expect(await countOrdersWithoutUser(request)).toBe(guestOrdersBefore);
+        }
       } finally {
-        // await deleteTestAccount(request, acct.id);
+        if (account) await deleteTestAccount(request, account.id);
       }
     });
   }

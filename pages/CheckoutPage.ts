@@ -93,6 +93,14 @@ export class CheckoutPage {
     await expect(this.heading).toBeVisible();
   }
 
+  // Logged-in arrangement shared by the specs: token, items in the cart, checkout page open
+  async startAsUser(token: string, items: CartItem[], via: 'home' | 'detail') {
+    await this.loginWithToken(token);
+    await this.openHome();
+    await this.fillCart(items, via);
+    await this.openCheckout();
+  }
+
   async isTotalEditable(): Promise<boolean> {
     return this.totalInput.isEditable();
   }

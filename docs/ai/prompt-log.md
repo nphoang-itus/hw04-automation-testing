@@ -690,3 +690,48 @@ Bạn xem lại các cột và giá trị. Nếu ổn thì tôi làm P4: `pages/
 ````
 
 ---
+
+### #22 — 2026-11-14 16:10 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+làm P4: pages/CheckoutPage.ts và mở rộng utils/api.ts, gồm đọc sản phẩm, đọc đơn hàng, lấy token để tiêm vào localStorage. Sau đó smoke-test helper trên SUT thật như đã làm với FR-02.
+````
+- **Output (verbatim, text only):**
+````text
+Xong P4. Helper cho FR-08 đã commit local (`1775ede`), chưa push. Smoke test trên SUT thật pass ở Chromium.
+
+**Code mới**
+- `pages/CheckoutPage.ts`:
+  - Chỉ điều hướng bằng click, vì giỏ hàng mất khi `goto`.
+  - `loginWithToken` tiêm token vào `localStorage` bằng init script, nên không cần đăng nhập qua UI.
+  - `fillCart(items, 'home' | 'detail')` thêm hàng qua trang chủ hoặc qua trang chi tiết (bấm nút hai lần, rồi quay về bằng link `EShop`).
+  - `confirm()` đợi response của `/api/checkout` rồi trả về status và body request.
+  - Mọi `alert()` đều được ghi vào `dialogs`.
+- `utils/api.ts` (mở rộng): `getProducts`, `getToken`, `getMyOrders`, `countOrdersWithoutUser`, `checkoutApi`.
+- `utils/cart.ts`: `parseItems("1:1|4:1")` và `computeTotal`. Tổng đúng được tính từ giá lấy lúc chạy.
+- `playwright.config.ts`: thêm `locale: 'en-US'` cho cả 3 browser, và sửa `baseURL` mặc định thành `:5173` (trước đó là `:3000`).
+
+**Smoke test thật (Chromium)**
+- Luồng 2 sản phẩm: tổng input, tổng hiển thị và tổng kỳ vọng đều là 36.000.000.
+- Luồng trang chi tiết với MacBook số lượng 3 cho 135.000.000, đúng kỳ vọng.
+- Khách bấm thanh toán trong giỏ: hiện dialog "Bạn cần đăng nhập để thanh toán!" và về `/login`.
+- Khách gọi API checkout không token: HTTP 401, số đơn không có user vẫn là 0.
+- Quan sát thêm khớp giả thuyết H1–H4, nhưng chưa phải kết quả chính thức:
+  - ô tổng sửa được;
+  - sửa tổng thành 1 thì backend lưu đơn `total_amount = 1`;
+  - giỏ hàng vẫn còn 2 dòng sau khi thanh toán thành công;
+  - `shipping_address` là null.
+
+**Lỗi script bắt được lúc smoke test (đã sửa)**
+- `isVisible()` và `count()` không tự chờ. Lần đầu nó báo "giỏ trống, 0 dòng" trong khi trang vẫn đang ở Home. Phải dùng `expect(...)` hoặc `waitFor`.
+- Một locator heading cấp 2 vi phạm strict mode vì trang Home có 5 heading.
+
+**Hạn chế đã ghi vào `docs/fr08-checkout/p4-helpers.md`**
+- Chưa có API xóa đơn hàng, nên mỗi lần chạy sẽ để lại đơn trong DB (SUT tự reseed khi khởi động lại). Test sẽ tìm đơn của mình bằng token của chính test user.
+- `tests/_smoke8.spec.ts` vẫn nằm trong `tests/` dưới dạng file untracked, chưa commit. Bạn xóa tay giúp, hoặc cho phép thì tôi xóa.
+
+Dòng audit #19 đã thêm (INCOMPLETE), thống kê giờ là 19 artifact. Bước tiếp theo là P5: viết spec data-driven nháp cho FR-08 rồi commit nguyên bản trước khi sửa. Bạn muốn làm luôn không?
+````
+
+---
