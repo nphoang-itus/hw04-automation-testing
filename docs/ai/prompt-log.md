@@ -772,3 +772,42 @@ Dòng audit #20 đã thêm (PENDING), thống kê giờ là 20 artifact. Bước
 ````
 
 ---
+
+### #24 — 2026-11-14 16:15 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+làm P7 đi, chạy thật FR-08 trên Chromium
+````
+- **Output (verbatim, text only):**
+````text
+Đã chạy thật bản nháp FR-08 trên Chromium, kết quả **15 test: 9 pass, 6 fail** (13,5 giây). Cả 6 fail đều do SUT sai spec, không có test nào fail vì lỗi script. Phân tích nằm ở `docs/fr08-checkout/p7-first-run.md`, log ở `docs/evidence/fr08-draft-chromium-run1.txt`. Đã commit local (`674fad9`), chưa push.
+
+**6 test fail, gom thành 3 bug gốc**
+- **A07–A10:** backend lưu đúng `total_amount` do client gửi (1, 0, -1000, 10 lần giá thật) thay vì tự tính lại. Tôi gọi API trực tiếp để xác nhận: gửi `items` trị giá 30.000.000 kèm `total_amount: 1` thì đơn lưu 1. Body rỗng `{}` vẫn trả 200 và tạo đơn có `total_amount = null`.
+- **B01:** ô tổng tiền sửa được (`not.toBeEditable()` fail).
+- **B04:** sau khi thanh toán thành công, giỏ hàng vẫn còn nguyên sản phẩm.
+
+Kết quả khớp bảng dự đoán ở P2 (3 bug gốc). Đây là quan sát thật, chưa phải bug report chính thức.
+
+**9 test pass đúng spec:** A01–A04 (tổng đúng khi không sửa), A05, A06, B02, B03, B05. Trong đó có hai test pass nhưng yếu:
+- **A06** chỉ kiểm status ≥ 400.
+- **B03** chỉ chứng minh 4 giá trị khớp khi không sửa tổng, không phân biệt được backend có tự tính lại hay không.
+
+**Điểm yếu của script (chưa gây fail, để P6)**
+- **Thiếu test cấp API cho "backend tự tính lại":** nếu SUT đổi ô tổng thành read-only, `setTotal` trả `false`. Spec bỏ qua giá trị trả về đó nên A07–A10 vẫn có thể pass mà không kiểm tra backend.
+- **Chưa có test cho request thiếu tổng hoặc thiếu `items`:** có thể thêm với độ tin cậy A.
+- **A01 gộp nhiều assertion**, dễ khó đọc khi fail.
+
+Mới chạy Chromium, Firefox và WebKit chưa chạy. Dòng audit #21 đã thêm (INCOMPLETE), thống kê giờ là 21 artifact.
+
+Bước tiếp theo là P6, mỗi sửa một commit riêng:
+1. Thêm B06: gọi API trực tiếp với `items` và tổng sai.
+2. Assert giá trị trả về của `setTotal`.
+3. Bổ sung assertion cho A06.
+4. Thêm biến thể tampered cho B03.
+
+Bạn muốn làm theo hướng này không?
+````
+
+---

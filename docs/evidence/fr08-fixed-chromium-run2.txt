@@ -1,0 +1,288 @@
+
+Running 17 tests using 2 workers
+
+  ✓   2 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A01 [positive] Verify checkout succeeds for a logged-in user with one product (645ms)
+  ✓   3 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A02 [positive] Verify checkout total equals the sum of two different products (375ms)
+  ✓   4 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A03 [positive] Verify checkout total is correct when the same product is added twice (371ms)
+  ✓   5 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A04 [positive] Verify checkout total uses the quantity chosen on the product detail page (507ms)
+  ✓   6 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A05 [negative] Verify a guest cannot proceed to checkout from the cart (282ms)
+  ✓   7 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A06 [negative] Verify a guest cannot create an order by submitting checkout directly (217ms)
+  ✘   8 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A07 [negative] Verify backend ignores a client total lower than the real total (406ms)
+  ✘   9 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A08 [negative] Verify backend ignores a client total of zero (429ms)
+  ✘  10 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A09 [negative] Verify backend ignores a negative client total (413ms)
+  ✘  11 [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A10 [negative] Verify backend ignores a client total higher than the real total (413ms)
+  ✘   1 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B01 [attribute] Verify the total input on the checkout page is not user-editable (5.6s)
+  ✓  12 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B02 [ui] Verify the checkout page lists every ordered product with name, quantity and line amount (459ms)
+  ✓  13 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B03 [state] Verify the displayed total, the request total and the stored total agree (408ms)
+  ✘  14 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B04 [state] Verify the cart is empty after a successful checkout (5.4s)
+  ✓  15 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B05 [security] Verify the checkout API rejects a request without a token (83ms)
+  ✘  16 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B06 [security] Verify the backend ignores the client total when the checkout API is called directly (80ms)
+  ✘  17 [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B07 [state] Verify displayed, sent and stored totals equal the computed total after the user tries to change the total (358ms)
+
+
+  1) [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A07 [negative] Verify backend ignores a client total lower than the real total 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000000
+    Received: 1
+
+      69 |           const orders = await getMyOrders(request, token!);
+      70 |           expect(orders).toHaveLength(1);
+    > 71 |           expect(orders[0].total_amount).toBe(expectedTotal);
+         |                                          ^
+      72 |         } else if (tc.entry === 'cart') {
+      73 |           // guest stopped at the cart
+      74 |           await expect.poll(() => checkout.dialogs).toContain(tc.expected_text);
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checkout.spec.ts:71:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-0bccc-l-lower-than-the-real-total-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checkout-FR-08-Checko-0bccc-l-lower-than-the-real-total-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-0bccc-l-lower-than-the-real-total-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checkout-FR-08-Checko-0bccc-l-lower-than-the-real-total-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A08 [negative] Verify backend ignores a client total of zero 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000000
+    Received: 0
+
+      69 |           const orders = await getMyOrders(request, token!);
+      70 |           expect(orders).toHaveLength(1);
+    > 71 |           expect(orders[0].total_amount).toBe(expectedTotal);
+         |                                          ^
+      72 |         } else if (tc.entry === 'cart') {
+      73 |           // guest stopped at the cart
+      74 |           await expect.poll(() => checkout.dialogs).toContain(tc.expected_text);
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checkout.spec.ts:71:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-6b1fc-ores-a-client-total-of-zero-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checkout-FR-08-Checko-6b1fc-ores-a-client-total-of-zero-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-6b1fc-ores-a-client-total-of-zero-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checkout-FR-08-Checko-6b1fc-ores-a-client-total-of-zero-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A09 [negative] Verify backend ignores a negative client total 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000000
+    Received: -1000
+
+      69 |           const orders = await getMyOrders(request, token!);
+      70 |           expect(orders).toHaveLength(1);
+    > 71 |           expect(orders[0].total_amount).toBe(expectedTotal);
+         |                                          ^
+      72 |         } else if (tc.entry === 'cart') {
+      73 |           // guest stopped at the cart
+      74 |           await expect.poll(() => checkout.dialogs).toContain(tc.expected_text);
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checkout.spec.ts:71:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-aed93-res-a-negative-client-total-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checkout-FR-08-Checko-aed93-res-a-negative-client-total-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-aed93-res-a-negative-client-total-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checkout-FR-08-Checko-aed93-res-a-negative-client-total-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A10 [negative] Verify backend ignores a client total higher than the real total 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000000
+    Received: 300000000
+
+      69 |           const orders = await getMyOrders(request, token!);
+      70 |           expect(orders).toHaveLength(1);
+    > 71 |           expect(orders[0].total_amount).toBe(expectedTotal);
+         |                                          ^
+      72 |         } else if (tc.entry === 'cart') {
+      73 |           // guest stopped at the cart
+      74 |           await expect.poll(() => checkout.dialogs).toContain(tc.expected_text);
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checkout.spec.ts:71:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-7159b--higher-than-the-real-total-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checkout-FR-08-Checko-7159b--higher-than-the-real-total-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checkout-FR-08-Checko-7159b--higher-than-the-real-total-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checkout-FR-08-Checko-7159b--higher-than-the-real-total-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B01 [attribute] Verify the total input on the checkout page is not user-editable 
+
+    Error: expect(locator).not.toBeEditable() failed
+
+    Locator:  locator('input[type="number"]')
+    Expected: not editable
+    Received: editable
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEditable" locator('input[type="number"]') with timeout 5000ms
+      - waiting for locator('input[type="number"]')
+        14 × locator resolved to <input type="number" value="30000000" class="border p-2 rounded text-red-600 font-bold"/>
+           - unexpected value "editable"
+
+
+      37 |           case 'input_not_editable': {
+      38 |             await checkout.startAsUser(token, items, 'home');
+    > 39 |             await expect(checkout.totalInput).not.toBeEditable();
+         |                                                   ^
+      40 |             break;
+      41 |           }
+      42 |           case 'lines_listed': {
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checks.spec.ts:39:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-9c77b-t-page-is-not-user-editable-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checks-FR-08-Structur-9c77b-t-page-is-not-user-editable-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-9c77b-t-page-is-not-user-editable-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checks-FR-08-Structur-9c77b-t-page-is-not-user-editable-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B04 [state] Verify the cart is empty after a successful checkout 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Giỏ hàng của bạn đang trống')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Giỏ hàng của bạn đang trống') with timeout 5000ms
+      - waiting for getByText('Giỏ hàng của bạn đang trống')
+
+
+      69 |             await page.getByRole('button', { name: 'Quay lại trang chủ' }).click();
+      70 |             await checkout.goToCart();
+    > 71 |             await expect(checkout.emptyCartMessage).toBeVisible();
+         |                                                     ^
+      72 |             await expect(page.locator('tbody tr')).toHaveCount(0);
+      73 |             break;
+      74 |           }
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checks.spec.ts:71:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-5f9be-after-a-successful-checkout-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checks-FR-08-Structur-5f9be-after-a-successful-checkout-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-5f9be-after-a-successful-checkout-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checks-FR-08-Structur-5f9be-after-a-successful-checkout-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B06 [security] Verify the backend ignores the client total when the checkout API is called directly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 36000000
+    Received: 1
+
+      91 |             if (res.status === 200) {
+      92 |               expect(orders).toHaveLength(1);
+    > 93 |               expect(orders[0].total_amount).toBe(expectedTotal);
+         |                                              ^
+      94 |             } else {
+      95 |               expect(res.status).toBeLessThan(500); // rejecting the bogus total is also acceptable
+      96 |               expect(orders).toHaveLength(0);
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checks.spec.ts:93:46
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-8c1d7-kout-API-is-called-directly-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checks-FR-08-Structur-8c1d7-kout-API-is-called-directly-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-8c1d7-kout-API-is-called-directly-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checks-FR-08-Structur-8c1d7-kout-API-is-called-directly-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B07 [state] Verify displayed, sent and stored totals equal the computed total after the user tries to change the total 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000000
+    Received: 1
+
+      77 |             const tampered = await checkout.setTotal(c.tamper_value!);
+      78 |             if (!tampered) testInfo.annotations.push({ type: 'note', description: 'total input not editable; tamper step skipped' });
+    > 79 |             expect(await checkout.summaryTotal()).toBe(expectedTotal);
+         |                                                   ^
+      80 |             const attempt = await checkout.confirm();
+      81 |             expect(attempt.requestBody.total_amount).toBe(expectedTotal);
+      82 |             await expect(checkout.successHeading).toBeVisible();
+        at /Users/nphoang/Developer/hcmus/software-testing/HW04-Automation-Testing/tests/fr08-checks.spec.ts:79:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-fb238-r-tries-to-change-the-total-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/fr08-checks-FR-08-Structur-fb238-r-tries-to-change-the-total-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/fr08-checks-FR-08-Structur-fb238-r-tries-to-change-the-total-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/fr08-checks-FR-08-Structur-fb238-r-tries-to-change-the-total-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A07 [negative] Verify backend ignores a client total lower than the real total 
+    [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A08 [negative] Verify backend ignores a client total of zero 
+    [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A09 [negative] Verify backend ignores a negative client total 
+    [chromium] › tests/fr08-checkout.spec.ts:28:5 › FR-08 Checkout (web) › FR08-A10 [negative] Verify backend ignores a client total higher than the real total 
+    [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B01 [attribute] Verify the total input on the checkout page is not user-editable 
+    [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B04 [state] Verify the cart is empty after a successful checkout 
+    [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B06 [security] Verify the backend ignores the client total when the checkout API is called directly 
+    [chromium] › tests/fr08-checks.spec.ts:27:5 › FR-08 Structure, state and security checks › FR08-B07 [state] Verify displayed, sent and stored totals equal the computed total after the user tries to change the total 
+  9 passed (14.0s)
