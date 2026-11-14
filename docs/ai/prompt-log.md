@@ -659,3 +659,34 @@ Dòng audit #17 đã thêm (PENDING), thống kê giờ là 17 artifact. Bạn x
 ````
 
 ---
+
+### #21 — 2026-11-14 16:08 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+làm P3 đi, tạo file dữ liệu cho FR-08
+````
+- **Output (verbatim, text only):**
+````text
+Xong P3. Hai file dữ liệu FR-08 đã tạo và commit local (`251e539`), chưa push.
+
+**`data/fr08-checkout.csv`** (10 dòng, A01–A10, 14 cột)
+- `login` (`user` hoặc `guest`), `items` (cặp `sản phẩm:số lượng`, ví dụ `1:1|4:1`), `add_via` (`home` hoặc `detail`), `entry` (`cart` hoặc `direct`, A06 vào thẳng `/checkout`).
+- `tamper_mode` và `tamper_value` cho 4 test sửa tổng tiền: A07 `absolute` 1, A08 `absolute` 0, A09 `absolute` -1000, A10 `multiplier` 10.
+- `expected_outcome` (`order_created` hoặc `no_order`), `expected_total` luôn là ký hiệu `computed`, `expected_text`, `spec_ref`.
+- Số tiền đúng không nằm trong file. Spec sẽ tính tổng từ giá lấy qua `GET /api/products` lúc chạy.
+- A06 để trống `expected_text`, vì spec không nói thông báo khi khách gửi thẳng `/checkout`.
+
+**`data/fr08-checkout-checks.json`** (5 check, B01–B05): `input_not_editable`, `lines_listed` (kỳ vọng 3 dòng), `totals_agree`, `cart_empty_after_success` (kỳ vọng "Giỏ hàng của bạn đang trống"), `api_guest_rejected` (401 hoặc 403). Mỗi check có `spec_ref`.
+
+**Đã kiểm tra bằng lệnh thật**
+- Python parse được 10 dòng CSV (không dòng nào sai số cột) và 5 check JSON.
+- `validate_feature.py fr08` chấp nhận phần dữ liệu (15 case, không còn TODO). Nó vẫn báo lỗi spec khung cũ, điều này đúng vì spec chưa viết.
+- Chưa kiểm: runner của Playwright nạp được file hay chưa. Việc đó làm ở P5.
+
+Dòng audit #18 đã thêm (PENDING). Thống kê giờ là 18 artifact.
+
+Bạn xem lại các cột và giá trị. Nếu ổn thì tôi làm P4: `pages/CheckoutPage.ts` và mở rộng `utils/api.ts`, gồm đọc sản phẩm, đọc đơn hàng, lấy token để tiêm vào `localStorage`. Sau đó smoke-test helper trên SUT thật như đã làm với FR-02.
+````
+
+---

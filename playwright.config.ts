@@ -19,7 +19,8 @@ export default defineConfig({
     }],
   ],
   use: {
-    baseURL: process.env.BASE_URL ?? 'http://localhost:3000',
+    baseURL: process.env.BASE_URL ?? 'http://localhost:5173',
+    locale: 'en-US', // toLocaleString() output must be the same in every browser
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
   },

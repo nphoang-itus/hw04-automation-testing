@@ -63,3 +63,49 @@ export async function getMe(request: APIRequestContext, token: string): Promise<
   const res = await request.get(`${API}/api/users/me`, { headers: { Authorization: `Bearer ${token}` } });
   return { status: res.status(), body: await res.json().catch(() => null) };
 }
+
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+export interface Order {
+  id: number;
+  user_id: number | null;
+  total_amount: number;
+  status: string;
+  shipping_address: string | null;
+}
+
+export async function getProducts(request: APIRequestContext): Promise<Product[]> {
+  const res = await request.get(`${API}/api/products`);
+  return res.json();
+}
+
+// Token of an existing account, used to log in without the UI (injected into localStorage by the page object)
+export async function getToken(request: APIRequestContext, account: TestAccount): Promise<string> {
+  const { status, body } = await loginApi(request, account.email, account.password);
+  if (status !== 200) throw new Error(`Login failed for ${account.email} (${status})`);
+  return body.token;
+}
+
+// Orders of the user that owns the token (hidden state of a checkout)
+export async function getMyOrders(request: APIRequestContext, token: string): Promise<Order[]> {
+  const res = await request.get(`${API}/api/orders/my-orders`, { headers: { Authorization: `Bearer ${token}` } });
+  return res.json();
+}
+
+// Orders that belong to nobody: a guest checkout would create one (orders cannot be deleted through the API)
+export async function countOrdersWithoutUser(request: APIRequestContext): Promise<number> {
+  const res = await request.get(`${API}/api/admin/orders`, { headers: await adminHeaders(request) });
+  return (await res.json()).filter((o: Order) => o.user_id == null).length;
+}
+
+export async function checkoutApi(request: APIRequestContext, token: string | null, body: object): Promise<LoginResult> {
+  const res = await request.post(`${API}/api/checkout`, {
+    data: body,
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  return { status: res.status(), body: await res.json().catch(() => null) };
+}
