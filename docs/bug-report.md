@@ -77,3 +77,43 @@ Created 2026-11-14 on https://github.com/tkob-team/eshop-sut with the student's 
 | BUG-FR02-06 | #279 |
 
 Note: the first creation attempt used a shifted title array, so #275–#279 were first created with titles of the neighbouring bugs and then corrected with `gh issue edit`; #280 was created last. Titles and bodies were re-checked after the fix.
+
+---
+
+# FR-08 (Feature B — Checkout)
+
+Reproduced on Chromium, Firefox, WebKit: 17 tests per browser, **9 pass, 8 fail on each** (`docs/evidence/fr08-3browsers-run3.txt`, `reports/<browser>/index.html`). 8 failing tests = 3 distinct defects. Expected results from the SUT spec FR-08. GitHub Issues: not created yet (pending the student's approval).
+
+| ID | Title | Severity | Failing tests | Spec | Evidence | HW02 ref |
+|---|---|---|---|---|---|---|
+| BUG-FR08-01 | Backend stores the client `total_amount` instead of recomputing it | Critical | A07, A08, A09, A10, B06 | FR-08 bullet 4 | `evidence/bugs/BUG-FR08-01.png` | editable total / trust of `total_amount` |
+| BUG-FR08-02 | Total field on the checkout page is editable | Major | B01, B07 | FR-08 bullet 2 | `evidence/bugs/BUG-FR08-02.png` | editable total |
+| BUG-FR08-03 | Cart is not cleared after a successful checkout | Major | B04 | FR-08 bullet 5 | `evidence/bugs/BUG-FR08-03.png` | cart not cleared |
+
+Test → bug mapping: A07–A10, B06 → 01 · B01, B07 → 02 · B04 → 03 (A01–A06, B02, B03, B05 pass on every browser).
+
+### BUG-FR08-01 — Backend stores the client total
+- **Severity:** Critical · **Browsers:** all 3 · **Component:** backend `POST /api/checkout`
+- **Spec:** "Backend phải tự tính lại tổng tiền; không chấp nhận giá trị `total_amount` do client gửi lên."
+- **Steps:** 1) Create a user and log in. 2) `POST /api/checkout` with one iPhone 15 Pro Max (30,000,000) and `total_amount: 1`. 3) `GET /api/orders/my-orders`.
+- **Expected:** stored total 30,000,000 (or the request is rejected).
+- **Actual:** HTTP 200, stored `total_amount = 1`. A UI-level tamper gives the same (A07 → 1, A08 → 0, A09 → -1000, A10 → ×10). A `{}` body also returns 200 and stores `total_amount = null`.
+- **Evidence:** `docs/evidence/bugs/BUG-FR08-01.png`; automated: FR08-A07–A10, FR08-B06 (Expected 36000000, Received 1).
+
+### BUG-FR08-02 — Total field is editable
+- **Severity:** Major · **Browsers:** all 3 · **Component:** `frontend-web/src/pages/Checkout.jsx` (`input type="number"` with `onChange`)
+- **Spec:** "Tổng tiền thanh toán được tính tự động từ giỏ hàng và không cho phép người dùng chỉnh sửa trực tiếp."
+- **Steps:** 1) Log in, add a product, open the cart and click "Tiến hành thanh toán". 2) Type 1 into the total field.
+- **Expected:** the field is read-only/disabled; the total stays 30,000,000.
+- **Actual:** the field accepts the value and the page summary shows 1.
+- **Evidence:** `docs/evidence/bugs/BUG-FR08-02.png`; automated: FR08-B01 (`not.toBeEditable()` fails), FR08-B07 (Expected 30000000, Received 1).
+
+### BUG-FR08-03 — Cart not cleared after success
+- **Severity:** Major · **Browsers:** all 3 · **Component:** `Checkout.jsx` / `CartContext.jsx` (cart is not cleared after the success response)
+- **Spec:** "Sau thanh toán thành công, giỏ hàng được xóa."
+- **Steps:** 1) Log in, add a product, check out successfully. 2) Click "Quay lại trang chủ". 3) Open the cart.
+- **Expected:** "Giỏ hàng của bạn đang trống".
+- **Actual:** the cart still lists the purchased line (1 line, 30,000,000 ₫).
+- **Evidence:** `docs/evidence/bugs/BUG-FR08-03.png`; automated: FR08-B04.
+
+Evidence script: `scripts/capture-fr08-evidence.mjs` (API screenshot renders real responses; UI screenshots are real pages with a DOM annotation overlay).

@@ -29,7 +29,7 @@
 | Feature | Automated | Executed | Passed | Failed | Browser runs | Bugs (distinct) |
 |---|---|---|---|---|---|---|
 | A FR-02 | 20 | 60 (20 × 3) | 33 | 27 | 3 | 6 (`docs/bug-report.md`) |
-| B FR-08 | 0 | – | – | – | 0 | – |
+| B FR-08 | 17 | 51 (17 × 3) | 27 | 24 | 3 | 3 (`docs/bug-report.md`) |
 | C FR-16 | 0 | – | – | – | 0 | – |
 
 Details: `docs/fr02-multibrowser-results.md`.
