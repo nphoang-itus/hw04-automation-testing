@@ -1,2 +1,11 @@
-id,type,title,expected_outcome,expected_text,spec_ref,hw02_ref
-FR08-A01,positive,TODO Action + Function + Condition,TODO,,TODO quote the spec,
+id,type,title,login,items,add_via,entry,tamper_mode,tamper_value,expected_outcome,expected_total,expected_text,spec_ref,hw02_ref
+FR08-A01,positive,Verify checkout succeeds for a logged-in user with one product,user,1:1,home,cart,none,,order_created,computed,Thanh toán thành công!,FR-08 logged-in user can pay; total from cart,
+FR08-A02,positive,Verify checkout total equals the sum of two different products,user,1:1|4:1,home,cart,none,,order_created,computed,Thanh toán thành công!,FR-08 total computed from cart,
+FR08-A03,positive,Verify checkout total is correct when the same product is added twice,user,2:2,home,cart,none,,order_created,computed,Thanh toán thành công!,FR-08 total computed from cart,
+FR08-A04,positive,Verify checkout total uses the quantity chosen on the product detail page,user,3:3,detail,cart,none,,order_created,computed,Thanh toán thành công!,FR-08 total computed from cart,
+FR08-A05,negative,Verify a guest cannot proceed to checkout from the cart,guest,1:1,home,cart,none,,no_order,,Bạn cần đăng nhập để thanh toán!,FR-08 only logged-in users can pay,
+FR08-A06,negative,Verify a guest cannot create an order by submitting checkout directly,guest,,none,direct,none,,no_order,,,FR-08 only logged-in users can pay,
+FR08-A07,negative,Verify backend ignores a client total lower than the real total,user,1:1,home,cart,absolute,1,order_created,computed,Thanh toán thành công!,FR-08 backend recomputes total and ignores client total_amount,
+FR08-A08,negative,Verify backend ignores a client total of zero,user,1:1,home,cart,absolute,0,order_created,computed,Thanh toán thành công!,FR-08 backend recomputes total and ignores client total_amount,
+FR08-A09,negative,Verify backend ignores a negative client total,user,1:1,home,cart,absolute,-1000,order_created,computed,Thanh toán thành công!,FR-08 backend recomputes total and ignores client total_amount,
+FR08-A10,negative,Verify backend ignores a client total higher than the real total,user,1:1,home,cart,multiplier,10,order_created,computed,Thanh toán thành công!,FR-08 backend recomputes total and ignores client total_amount,

@@ -1,4 +1,17 @@
 [
-  { "id": "FR08-B01", "type": "attribute", "title": "TODO", "check": "attribute",
-    "spec_ref": "TODO quote the spec" }
+  { "id": "FR08-B01", "type": "attribute", "title": "Verify the total input on the checkout page is not user-editable",
+    "check": "input_not_editable", "items": "1:1",
+    "spec_ref": "FR-08 total cannot be edited directly", "hw02_ref": "" },
+  { "id": "FR08-B02", "type": "ui", "title": "Verify the checkout page lists every ordered product with name, quantity and line amount",
+    "check": "lines_listed", "items": "1:1|3:1|5:1", "expected_lines": 3,
+    "spec_ref": "FR-08 full list of ordered products is displayed", "hw02_ref": "" },
+  { "id": "FR08-B03", "type": "state", "title": "Verify the displayed total, the request total and the stored total agree",
+    "check": "totals_agree", "items": "1:1|4:1",
+    "spec_ref": "FR-08 total computed automatically from the cart", "hw02_ref": "" },
+  { "id": "FR08-B04", "type": "state", "title": "Verify the cart is empty after a successful checkout",
+    "check": "cart_empty_after_success", "items": "1:1", "expected_text": "Giỏ hàng của bạn đang trống",
+    "spec_ref": "FR-08 cart is cleared after a successful checkout", "hw02_ref": "" },
+  { "id": "FR08-B05", "type": "security", "title": "Verify the checkout API rejects a request without a token",
+    "check": "api_guest_rejected", "expected_status_in": [401, 403],
+    "spec_ref": "FR-08 only logged-in users can pay", "hw02_ref": "" }
 ]

@@ -623,3 +623,39 @@ No response requested.
 ````
 
 ---
+
+### #20 — 2026-11-14 16:06 (ICT)
+- **Tool / model:** Claude Code · `claude-sonnet-5-5`
+- **Prompt (verbatim):**
+````text
+keep going
+````
+- **Output (verbatim, text only):**
+````text
+Xong bước P2 cho FR-08. Danh sách test case nằm ở `docs/fr08-checkout/p2-testcases.md`, đã commit local (`e823f8b`) và chưa push. Tôi chưa chạy gì, theo skill thì chờ bạn duyệt rồi mới sang P3.
+
+**15 test case, kỳ vọng lấy theo spec**
+- **Nhóm A (A01–A10), luồng thanh toán:**
+  - A01–A04: thanh toán thành công với 1 sản phẩm, 2 sản phẩm khác nhau, cùng sản phẩm bấm hai lần và số lượng 3 chọn từ trang chi tiết. Đơn lưu phải có tổng đúng bằng tổng giá × số lượng.
+  - A05, A06: khách chưa đăng nhập không thanh toán được, qua nút trong giỏ hàng (A05) và qua `/checkout` trực tiếp (A06). Không được tạo đơn.
+  - A07–A10: sửa tổng tiền thành 1, 0, âm hoặc 10 lần giá thật. Backend phải tự tính lại và không tin `total_amount` của client.
+- **Nhóm B (B01–B05), cấu trúc và hậu quả:**
+  - B01: ô tổng tiền không sửa được.
+  - B02: trang thanh toán liệt kê đủ sản phẩm.
+  - B03: tổng hiển thị, tổng gửi đi và tổng lưu trong đơn khớp nhau.
+  - B04: giỏ hàng trống sau khi thanh toán thành công (kiểm bằng click link, không `goto`).
+  - B05: API checkout không có token thì bị từ chối.
+
+Các giá trị tổng và đơn giá lấy từ `GET /api/products` lúc chạy, không hardcode. Mỗi kỳ vọng gắn nhãn S/D/A như ở FR-02. Phần đối chiếu spec nêu 3 điểm yếu:
+- `status = pending` thuộc FR-10, nên chỉ ghi nhận, không dùng làm tiêu chí fail.
+- A07–A10 cùng kiểm một yêu cầu (backend tự tính lại tổng) với 4 giá trị tampered khác nhau.
+- Thông báo cụ thể của A06 là spec gap.
+
+Những mục đã loại theo quyết định của bạn (coupon, nhãn giỏ hàng của FR-07, giỏ trống, địa chỉ, giới hạn số lượng) được ghi rõ trong mục "Không tạo TC".
+
+Bảng dự đoán (chỉ là giả thuyết, không dùng để viết kỳ vọng): A07–A10, B01 và B04 dự kiến fail, tương ứng 3 bug gốc (ô tổng sửa được, backend tin tổng của client, giỏ không bị xóa).
+
+Dòng audit #17 đã thêm (PENDING), thống kê giờ là 17 artifact. Bạn xem lại danh sách, nhất là A04 (số lượng qua trang chi tiết) và A07–A10. Nếu ổn thì tôi làm P3: file `data/fr08-checkout.csv` và `fr08-checkout-checks.json`.
+````
+
+---
